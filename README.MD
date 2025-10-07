@@ -31,14 +31,16 @@ Ce projet à pour objectif de créer un forum web qui autorise :
     * voir le nombre de likes.
     * voir le nombre de dislike.
     * voir les catégories des sujets du forum.
+    * utiliser le filtre pour les catégories
 
 - Seuls les utilisateurs enregistrés peuvent :
     * créer des sujets.
     * créer des messages.
     * associer une ou plusieurs catégories a un sujet (à sa création ?).
-    * mettre un like ou un dislike sur un sujet ou un commentaire.
+    * mettre un like ou un dislike sur un sujet ou un message. Impossibilité de faire les deux sur un même sujet ou un même message
     * voir les sujets créés par chaque utilisateur.
     * voir les sujets likés par les utilisateurs.
+    * utiliser le filtre pour les catégories, les messages créés et les likés par la personne utilisant le filtre.
 
 ## Docker :
 - Nous devons utiliser Docker pour le déploiement du forum.
@@ -64,7 +66,7 @@ Ce projet à pour objectif de créer un forum web qui autorise :
     * notifié d'un dislike.
     * notifié d'un message sur son sujet.
 
-- L'utilisateur d'un commentaire est :
+- L'utilisateur d'un message est :
     * notifié d'un like.
     * notifié d'un dislike.
 
