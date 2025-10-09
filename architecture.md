@@ -15,8 +15,11 @@ forum/
 │
 ├── internal/
 │	│
+│  	├── config/				# Fichiers de configurations. Pour l'instant juste celui qui lance la BdD et ses migrations
+│  	│	└── initdb.go
+│	│
 │  	├── domain/				# Définition des Entités (les struct/interface)
-│  	│	└── user_handler.go
+│  	│	└── user_type.go
 │	│
 │  	├── repositories/       # Accès DB (requêtes SQL pour champs 'user')
 │  	│	└── user_repository.go
