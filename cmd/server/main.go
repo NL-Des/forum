@@ -26,9 +26,9 @@ func main() {
 
 	//Routage HTTP:
 	//handlers → front
-	mux.HandleFunc("/", handlers.HomeHandler)
+	mux.HandleFunc("/", handlers.Home)
 	mux.HandleFunc("/register", handlers.RegisterHandler)
-	fs := http.FileServer(http.Dir("templates/assets"))
+	fs := http.FileServer(http.Dir("../../internal/templates/assets"))
 	mux.Handle("/assets/", http.StripPrefix("/assets/", fs))
 
 	//Lancement serveur:

@@ -1,0 +1,48 @@
+<html>
+  <head>
+    <title>forum</title>
+    <link rel="stylesheet" href="assets/css/home.css">
+  </head>
+  <body>
+    <div class="top-bar">
+      <div class="left-buttons">
+        <form>
+          <button type="submit" class="btn">New Subject</button>
+        </form>
+      </div>
+
+      <div class="right-buttons">
+
+        <form>
+          <input type="checkbox" id="login-popup" hidden>
+          <label for="login-popup" class="btn">Login</label>
+          <div class="popup">
+            <div class="popup-content">
+              <label for="login-popup" class="close">&times;</label>
+              <h2>Connexion</h2>
+              <form action="/login" method="POST">
+                <input type="text" name="username" placeholder="Nom d'utilisateur" required>
+                <input type="password" name="password" placeholder="Mot de passe" required>
+                <button type="submit">Se connecter</button>
+              </form>
+            </div>
+          </div>
+        </form>
+
+        <form>
+          <button type="submit" class="btn">Logout</button>
+        </form>
+
+        <form>
+          <a href="/register" class="btn">Register</a>
+
+
+              </form>
+            </div>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </body>
+</html>
