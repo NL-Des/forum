@@ -5,9 +5,23 @@
   </head>
   <body>
     <div class="top-bar">
-      <div class="left-buttons">
+      <div class="left-images">
+    <img src="assets/img/logoforum.png" alt="Image gauche">
+  </div>
+      <div class="middle-buttons">
         <form>
-          <button type="submit" class="btn">New Subject</button>
+          <button type="submit" class="btn">+ New Subject</button>
+          <select name="filters" id="filters">
+            <option value="">select filter</option>
+            <option value="{{.messagesCreated}}">your messages</option>
+            <option value="{{.likedPosts}}">liked posts</option>
+          </select>
+          <select name="categories" id="categories">
+            <option value="">select categories</option>
+            <option value="{{.categories}}">categorie 1</option>
+            <option value="{{.categories}}">categorie 2</option>
+            <option value="{{.categories}}">categorie 3</option>
+          </select>
         </form>
       </div>
 

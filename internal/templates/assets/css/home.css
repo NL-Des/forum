@@ -4,9 +4,13 @@ body {
   font-family: Arial, sans-serif;
 }
 
+/**********************************************************************/
+/*MARK: TOP BAR
+/**********************************************************************/
+
 .top-bar {
   background: linear-gradient(135deg, #74ebd5, #acb6e5);
-  height: 80px;
+  height: 150px;
   width: 100%;
   display: flex;
   align-items: center;
@@ -15,7 +19,13 @@ body {
   box-sizing: border-box;
 }
 
-.left-buttons form,
+.left-images img {
+  height: 150px;
+  width: 150px;
+  left: 10%;
+}
+
+.middle-buttons form,
 .right-buttons {
   display: flex;
   gap: 10px;
@@ -24,6 +34,10 @@ body {
 .top-bar form {
   margin: 0;
 }
+
+/**********************************************************************/
+/*MARK: BTN
+/**********************************************************************/
 
 .btn {
   background-color: white;
@@ -45,6 +59,10 @@ body {
   background-color: #0056b3;
   color: white;
 }
+
+/**********************************************************************/
+/*MARK: POPUP
+/**********************************************************************/
 
 .popup {
   display: none;
@@ -102,3 +120,100 @@ body {
   display: flex;
 }
 
+/**********************************************************************/
+/*MARK: FILTERS
+/**********************************************************************/
+
+select#filters {
+  background-color: white;
+  color: #007BFF;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  font-family: inherit;
+  font-size: 16px;
+  line-height: 1.2;
+  appearance: none; /* Supprime le style par défaut du navigateur */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-align: center;
+  box-shadow: 0 0 0 1px #007BFF inset; /* Pour rappeler le contour bleu */
+  transition: all 0.2s ease;
+}
+
+/* effet au survol */
+select#filters:hover {
+  background-color: #0056b3;
+  color: white;
+}
+
+select#filters:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #0056b3 inset;
+}
+
+/* flèche personnalisée à droite */
+select#filters {
+  background-image: linear-gradient(45deg, transparent 50%, #007BFF 50%),
+                    linear-gradient(135deg, #007BFF 50%, transparent 50%);
+  background-position: calc(100% - 15px) center, calc(100% - 10px) center;
+  background-size: 5px 5px;
+  background-repeat: no-repeat;
+  padding-right: 30px; /* espace pour la flèche */
+}
+
+select#filters:hover {
+  background-image: linear-gradient(45deg, transparent 50%, white 50%),
+                    linear-gradient(135deg, white 50%, transparent 50%);
+}
+
+/**********************************************************************/
+/*MARK: CATEGORIES
+/**********************************************************************/
+
+select#categories {
+  background-color: white;
+  color: #007BFF;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  font-family: inherit;
+  font-size: 16px;
+  line-height: 1.2;
+  appearance: none; /* Supprime le style par défaut du navigateur */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-align: center;
+  box-shadow: 0 0 0 1px #007BFF inset; /* Pour rappeler le contour bleu */
+  transition: all 0.2s ease;
+}
+
+/* effet au survol */
+select#categories:hover {
+  background-color: #0056b3;
+  color: white;
+}
+
+select#categories:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #0056b3 inset;
+}
+
+/* flèche personnalisée à droite */
+select#categories {
+  background-image: linear-gradient(45deg, transparent 50%, #007BFF 50%),
+                    linear-gradient(135deg, #007BFF 50%, transparent 50%);
+  background-position: calc(100% - 15px) center, calc(100% - 10px) center;
+  background-size: 5px 5px;
+  background-repeat: no-repeat;
+  padding-right: 30px; /* espace pour la flèche */
+}
+
+select#categories:hover {
+  background-image: linear-gradient(45deg, transparent 50%, white 50%),
+                    linear-gradient(135deg, white 50%, transparent 50%);
+}
