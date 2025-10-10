@@ -13,8 +13,8 @@ INSERT INTO categories (name) VALUES
 	("K.");
 
 INSERT INTO users (username, password, email) VALUES 
-	("fadadu13", "hashedpassword13", "fafa@wanadoo.com"),
-	("kékédu76", "76hashedpassword", "stevenpq@aol.fr");
+	("fadadu13", "$2a$10$LYX/BbvnZ8ylONo86SoqZuJkRCktFdqBg1xUBr9Kv6nAFWBo1pWHe", "fafa@wanadoo.com"),
+	("kékédu76", "$2a$10$ItmnyHH0GxmDBxQaMBIcVufiwcjVx0JsEzfpr0aW7xGY6gWP4.9Mm", "stevenpq@aol.fr");
 
 
 INSERT INTO topics (title, content, category_id, user_id) VALUES 
@@ -26,5 +26,5 @@ INSERT INTO topics (title, content, category_id, user_id) VALUES
 INSERT INTO messages (content, topic_id, user_id) VALUES 
 	("moi aussi, elle plissent un peu les yeux comme si elles te jugeaient avec mépris. Trop mignon!", 1, 2),
 	("clairement ils sont où les furets, iguanes, et tarantules domestiques?", 2, 2),
-	("Elle avance grâce au pouvoir de l'amour et l'imagination...", 3, 2),
+	("Elle avance grâce au pouvoir de l'amour et de l'imagination...", 3, 2),
 	("XD", 3, 1);

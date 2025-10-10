@@ -1,26 +1,31 @@
 package handlers
 
 import (
-	"forum/internal/services"
+	"forum/internal/domain"
 	"html/template"
 	"net/http"
 	"path/filepath"
 )
 
-var userService services.UserService
+var userService domain.UserService
+var templates *template.Template
 
-func InitHandlers(us services.UserService) {
+func InitHandlers(us domain.UserService) {
 	userService = us
+
+	// Précharger tous les templates une seule fois
+	var err error
+	templates, err = template.ParseGlob(filepath.Join("internal", "templates", "*.html"))
+	if err != nil {
+		panic("❌ error parsing templates: " + err.Error())
+	}
 }
 
 func renderTemplate(w http.ResponseWriter, tmpl string, data interface{}) {
-	tmplPath := filepath.Join("internal", "templates", tmpl)
-	t, err := template.ParseFiles(tmplPath)
+	err := templates.ExecuteTemplate(w, tmpl, data)
 	if err != nil {
-		http.Error(w, "Erreur interne : "+err.Error(), http.StatusInternalServerError)
-		return
+		http.Error(w, "❌ internal error: "+err.Error(), http.StatusInternalServerError)
 	}
-	t.Execute(w, data)
 }
 
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
@@ -35,7 +40,7 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Méthode POST : récupération du formulaire
 	if err := r.ParseForm(); err != nil {
-		http.Error(w, "Formulaire invalide", http.StatusBadRequest)
+		http.Error(w, "❌ error invalid form", http.StatusBadRequest)
 		return
 	}
 
@@ -47,7 +52,7 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		// Réaffiche le formulaire avec une erreur
 		renderTemplate(w, "register.html", map[string]string{
-			"Error": err.Error(),
+			"❌ error": err.Error(),
 		})
 		return
 	}

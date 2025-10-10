@@ -31,6 +31,7 @@ forum/
 │   │	└── user_handler.go
 │  	│
 │  	└── templates/          # Templates FrontEnd HTML/CSS/JS
+│  		├── assets/
 │  		├── index.html
 │  		└── register.html
 │
