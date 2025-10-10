@@ -23,10 +23,6 @@ func renderTemplate(w http.ResponseWriter, tmpl string, data interface{}) {
 	t.Execute(w, data)
 }
 
-func HomeHandler(w http.ResponseWriter, r *http.Request) {
-	http.Redirect(w, r, "/register", http.StatusSeeOther)
-}
-
 func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
 		renderTemplate(w, "register.html", nil)

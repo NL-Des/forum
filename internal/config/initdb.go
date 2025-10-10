@@ -1,13 +1,10 @@
 package config
 
 import (
-	"database/sql"
-	"forum/internal/repositories"
-	"log"
-
 	_ "github.com/mattn/go-sqlite3"
 )
 
+/*
 func InitDB() *sql.DB {
 	//connexion à la BdD:
 	db, err := sql.Open("sqlite3", "forum.db")
@@ -24,4 +21,4 @@ func InitDB() *sql.DB {
 	}
 
 	return db
-}
+}*/
