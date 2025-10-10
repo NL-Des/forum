@@ -17,6 +17,6 @@ func OpenDB(path string) *sql.DB {
 		log.Fatal("❌ Erreur connexion DB :", err)
 	}
 
-	log.Println("✅ Base de données initialisée")
+	log.Println("✅ Base de données ouverte")
 	return DB
 }

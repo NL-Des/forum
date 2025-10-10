@@ -1,7 +1,9 @@
 package handlers
 
 import (
+	"fmt"
 	"html/template"
+	"log"
 	"net/http"
 	"strconv"
 
@@ -50,7 +52,32 @@ func TopicHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Sujet introuvable", http.StatusNotFound)
 		return
 	}
+	posts, err := database.GetPostsByTopicID(id)
+	if err != nil {
+		log.Println("⚠️ Erreur récupération messages :", err)
+		posts = []database.Post{}
+	}
+
+	data := database.Thread{Topic: topic, Posts: posts}
 
 	tmpl := template.Must(template.ParseFiles("internal/templates/topic.html"))
-	tmpl.Execute(w, topic)
+	tmpl.Execute(w, data)
+}
+
+func AddPostHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Error(w, "Méthode non autorisée", http.StatusMethodNotAllowed)
+		return
+	}
+
+	topicID, _ := strconv.Atoi(r.FormValue("topic_id"))
+	content := r.FormValue("content")
+
+	err := database.InsertPost(topicID, content, 0)
+	if err != nil {
+		http.Error(w, "Erreur lors de l'ajout du message", http.StatusInternalServerError)
+		return
+	}
+
+	http.Redirect(w, r, fmt.Sprintf("/topic?id=%d", topicID), http.StatusSeeOther)
 }

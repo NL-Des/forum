@@ -1,5 +1,23 @@
 <html>
-<h2>{{.Title}}</h2>
-<p>{{.Content}}</p>
+<h2>{{.Topic.Title}}</h2>
+<p>{{.Topic.Content}}</p>
+
+<h3>Messages</h3>
+{{range .Posts}}
+  <div class="post">
+    <p>{{.Content}}</p>
+    <small>{{.CreatedAt}}</small>
+  </div>
+{{else}}
+  <p>Aucun message pour ce sujet.</p>
+{{end}}
+
+<h3>Ajouter un message</h3>
+<form method="POST" action="/add-post">
+  <input type="hidden" name="topic_id" value="{{.Topic.ID}}">
+  <textarea name="content" required></textarea>
+  <button type="submit">Envoyer</button>
+</form>
+
 <a href="/">Retour à l’accueil</a>
 </html>

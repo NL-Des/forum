@@ -25,6 +25,7 @@ func main() {
 	mux.HandleFunc("/register", handlers.RegisterHandler)
 	mux.HandleFunc("/create-topic", handlers.CreateTopicHandler)
 	mux.HandleFunc("/topic", handlers.TopicHandler)
+	mux.HandleFunc("/add-post", handlers.AddPostHandler)
 
 	fs := http.FileServer(http.Dir("internal/templates/assets"))
 	mux.Handle("/assets/", http.StripPrefix("/assets/", fs))
