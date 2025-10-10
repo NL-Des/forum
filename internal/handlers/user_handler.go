@@ -22,14 +22,13 @@ func InitHandlers(us domain.UserService) {
 }
 
 func renderTemplate(w http.ResponseWriter, tmpl string, data interface{}) {
-	err := templates.ExecuteTemplate(w, tmpl, data)
+	/* err := templates.ExecuteTemplate(w, tmpl, data) */
+	tmplPath := filepath.Join("../../internal/templates", tmpl)
+	t, err := template.ParseFiles(tmplPath)
 	if err != nil {
 		http.Error(w, "❌ internal error: "+err.Error(), http.StatusInternalServerError)
 	}
-}
-
-func HomeHandler(w http.ResponseWriter, r *http.Request) {
-	http.Redirect(w, r, "/register", http.StatusSeeOther)
+	t.Execute(w, data)
 }
 
 func RegisterHandler(w http.ResponseWriter, r *http.Request) {
@@ -59,4 +58,5 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Enregistrement réussi, redirection vers la page d’accueil
 	http.Redirect(w, r, "/", http.StatusSeeOther)
+
 }
