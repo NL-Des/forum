@@ -1,8 +1,10 @@
 package handlers
 
 import (
+	"forum/internal/database"
 	"forum/internal/services"
 	"html/template"
+	"log"
 	"net/http"
 	"path/filepath"
 )
@@ -50,4 +52,25 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Enregistrement réussi, redirection vers la page d’accueil
 	http.Redirect(w, r, "/", http.StatusSeeOther)
+}
+
+func HomeHandler(w http.ResponseWriter, r *http.Request) {
+	var tpl = template.Must(template.ParseFiles("internal/templates/home.html"))
+	if r.URL.Path != "/" {
+		http.Error(w, "Erreur :", http.StatusNotFound)
+		return
+	}
+
+	topics, err := database.GetAllTopics()
+	if err != nil {
+		log.Println("Erreur récupération sujets :", err)
+		http.Error(w, "Erreur lors du chargement des sujets", http.StatusInternalServerError)
+		return
+	}
+
+	if err := tpl.Execute(w, topics); err != nil {
+		log.Println("Erreur template :", err)
+		http.Error(w, "Erreur lors du chargement du template: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
 }

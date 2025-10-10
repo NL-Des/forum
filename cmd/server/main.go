@@ -1,7 +1,6 @@
 package main
 
 import (
-	"forum/internal/database"
 	"forum/internal/handlers"
 	"log"
 	"net/http"
@@ -13,8 +12,6 @@ func main() {
 	mux := http.NewServeMux()
 
 	//Lancement de la BdD:
-	database.InitDB("forum.db")
-
 	//Injection des dépendances:
 	//cheminement BdD → repositories → services → handlers
 	/*

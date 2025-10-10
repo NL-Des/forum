@@ -3,6 +3,6 @@ package domain
 type User struct {
 	ID       int64
 	Username string
-	Password string // (doit être "hashé")
+	Password string
 	Email    string
 }
