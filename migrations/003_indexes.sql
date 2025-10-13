@@ -15,8 +15,8 @@ CREATE INDEX idx_topics_category ON topics(category_id);
 CREATE INDEX idx_topics_user ON topics(user_id);
 
 -- Index sur les messages
-CREATE INDEX idx_messages_topic ON comments(topic_id);
-CREATE INDEX idx_messages_user ON comments(user_id);
+CREATE INDEX idx_messages_topic ON messages(topic_id);
+CREATE INDEX idx_messages_user ON messages(user_id);
 
 -- Index sur les réactions
 CREATE INDEX idx_reactions_target ON reactions(target_type, target_id);
@@ -24,4 +24,4 @@ CREATE INDEX idx_reactions_user ON reactions(user_id);
 
 -- pour trier et filtrer par dates
 CREATE INDEX idx_topics_created ON topics(created_at);
-CREATE INDEX idx_messages_created ON comments(created_at);
+CREATE INDEX idx_messages_created ON messages(created_at);

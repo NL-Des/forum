@@ -13,7 +13,7 @@ INSERT INTO categories (name) VALUES
 	("K.");
 
 INSERT INTO users (username, password, email) VALUES 
-	("fadadu13", "hashedpassword13", "fafa@wanadoo.com"),
+	("fadadu13", "$2a$10$td16dthAdwiagWZuEWFjnuYNofzfhR/oXG/KRTeukYBQJP6BbRTWG", "fafa@wanadoo.com"),
 	("kékédu76", "76hashedpassword", "stevenpq@aol.fr");
 
 
