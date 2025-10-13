@@ -12,15 +12,15 @@
         <form>
           <button type="submit" class="btn">+ New Subject</button>
           <select name="filters" id="filters">
-            <option value="">select filter</option>
-            <option value="{{.messagesCreated}}">your messages</option>
-            <option value="{{.likedPosts}}">liked posts</option>
+            <option>select filter</option>
+            <option>your messages</option>
+            <option>liked posts</option>
           </select>
           <select name="categories" id="categories">
             <option value="">select categories</option>
-            <option value="{{.categories}}">categorie 1</option>
-            <option value="{{.categories}}">categorie 2</option>
-            <option value="{{.categories}}">categorie 3</option>
+            <option>categorie 1</option>
+            <option>categorie 2</option>
+            <option>categorie 3</option>
           </select>
         </form>
       </div>
@@ -58,5 +58,33 @@
 
       </div>
     </div>
+
+    <div class="mainpart">
+        <button id="new-subject-btn" class="btn">New Subject</button>
+    </div>
+
+     <div id="subject-form" style="display: none;" class="form-container">
+    <form method="POST" action="/create-topic">
+        <input type="text" name="title" placeholder="Objet du sujet" required>
+        <textarea name="content" placeholder="Contenu du sujet" required></textarea>
+        <button type="submit">Publier</button>
+    </form>
+    </div>
+
+    <h2>Derniers sujets</h2>
+    {{range .}}
+    <div class="topic-banner">
+        <a href="/topic?id={{.ID}}">{{.Title}}</a>
+    </div>
+    {{else}}
+    <p>Aucun sujet pour le moment.</p>
+    {{end}}
+
+  </body>
+  <script>
+    document.getElementById("new-subject-btn").addEventListener("click", () => {
+        document.getElementById("subject-form").style.display = "block";
+    });
+    </script>
   </body>
 </html>
