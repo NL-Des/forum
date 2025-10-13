@@ -1,4 +1,11 @@
-	<html>
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+	<meta charset="UTF-8">
+	<title>topics</title>
+	<link rel="stylesheet" href="assets/css/topic.css">
+</head>
+<body>
 <h2>{{.Topic.Title}}</h2>
 <p>{{.Topic.Content}}</p>
 
@@ -9,15 +16,16 @@
     <small>{{.CreatedAt}}</small>
   </div>
 {{else}}
-  <p>Aucun message pour ce sujet.</p>
+  <p>No messages for this topic.</p>
 {{end}}
 
-<h3>Ajouter un message</h3>
+<h3>Add a message</h3>
 <form method="POST" action="/add-post">
   <input type="hidden" name="topic_id" value="{{.Topic.ID}}">
   <textarea name="content" required></textarea>
-  <button type="submit">Envoyer</button>
+  <button type="submit">Send</button>
 </form>
 
-<a href="/">Retour à l’accueil</a>
+<a href="/">Return to home</a>
+</body>
 </html>
