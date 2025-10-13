@@ -23,7 +23,7 @@ func renderTemplate(w http.ResponseWriter, tmpl string, data interface{}) {
 	t.Execute(w, data)
 }
 
-func RegisterHandler(w http.ResponseWriter, r *http.Request) {
+/* func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
 		renderTemplate(w, "register.html", nil)
 		return
@@ -51,4 +51,4 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	// Enregistrement réussi, redirection vers la page d’accueil
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 
-}
+} */
