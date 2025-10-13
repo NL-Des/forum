@@ -60,7 +60,7 @@ func TopicHandler(w http.ResponseWriter, r *http.Request) {
 
 	data := database.Thread{Topic: topic, Posts: posts}
 
-	tmpl := template.Must(template.ParseFiles("internal/templates/topic.html"))
+	tmpl := template.Must(template.ParseFiles("../../internal/templates/topic.html"))
 	tmpl.Execute(w, data)
 }
 
