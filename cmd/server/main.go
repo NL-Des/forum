@@ -1,10 +1,7 @@
 package main
 
 import (
-	"forum/internal/config"
 	"forum/internal/handlers"
-	"forum/internal/repositories"
-	"forum/internal/services"
 	"log"
 	"net/http"
 	"os"
@@ -27,19 +24,21 @@ func main() {
 	}
 
 	//Lancement de la BdD:
-	db := config.InitDB()
-	defer db.Close()
-
 	//Injection des dépendances:
 	//cheminement BdD → repositories → services → handlers
-	userRepo := repositories.NewUserRepository(db)
-	userService := services.NewUserService(userRepo)
-	handlers.InitHandlers(userService)
+	/*
+		userRepo := repositories.NewUserRepository(db)
+		userService := services.NewUserService(userRepo)
+		handlers.InitHandlers(userService)*/
 
 	//Routage HTTP:
 	//handlers → front
 	mux.HandleFunc("/", handlers.Home)
 	mux.HandleFunc("/register", handlers.RegisterHandler)
+	mux.HandleFunc("/create-topic", handlers.CreateTopicHandler)
+	mux.HandleFunc("/topic", handlers.TopicHandler)
+	mux.HandleFunc("/add-post", handlers.AddPostHandler)
+
 	fs := http.FileServer(http.Dir("../../internal/templates/assets"))
 	mux.Handle("/assets/", http.StripPrefix("/assets/", fs))
 

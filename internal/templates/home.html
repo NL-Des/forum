@@ -5,9 +5,22 @@
   </head>
   <body>
     <div class="top-bar">
-      <div class="left-buttons">
+      <div class="left-images">
+    <img src="assets/img/logoforum.png" alt="Image gauche">
+  </div>
+      <div class="middle-buttons">
         <form>
-          <button type="submit" class="btn">New Subject</button>
+          <select name="filters" id="filters">
+            <option>select filter</option>
+            <option>your messages</option>
+            <option>liked posts</option>
+          </select>
+          <select name="categories" id="categories">
+            <option value="">select categories</option>
+            <option>categorie 1</option>
+            <option>categorie 2</option>
+            <option>categorie 3</option>
+          </select>
         </form>
       </div>
 
@@ -21,9 +34,9 @@
               <label for="login-popup" class="close">&times;</label>
               <h2>Connexion</h2>
               <form action="/login" method="POST">
-                <input type="text" name="username" placeholder="Nom d'utilisateur" required>
-                <input type="password" name="password" placeholder="Mot de passe" required>
-                <button type="submit">Se connecter</button>
+                <input type="text" name="username" placeholder="username" required>
+                <input type="password" name="password" placeholder="password" required>
+                <button type="submit">Login</button>
               </form>
             </div>
           </div>
@@ -40,9 +53,49 @@
               </form>
             </div>
           </div>
-        </form>
 
-      </div>
-    </div>
+    <div class="mainpart">
+    <button id="new-subject-btn" class="btn">+ New Subject</button>
+</div>
+
+<div id="subject-form" class="form-container" style="display: none;">
+    <form method="POST" action="/create-topic">
+        <input type="text" name="title" placeholder="Object of subject" required>
+        <textarea name="content" placeholder="Topic content" required></textarea>
+        <button type="submit" class="btn">Publish</button>
+    </form>
+</div>
+
+<h2>Latest topics</h2>
+
+<div class="topics-header">
+    <span class="header-title">Object</span>
+    <span class="header-content">Content</span>
+</div>
+
+{{range .}}
+<div class="topic-banner">
+    <a href="/topic?id={{.ID}}">
+        <span class="topic-title">{{.Title}}</span>
+        <span class="topic-content">
+            {{if gt (len .Content) 80}}
+                {{slice .Content 0 80}}...
+            {{else}}
+                {{.Content}}
+            {{end}}
+        </span>
+    </a>
+</div>
+{{else}}
+<p>Aucun sujet pour le moment.</p>
+{{end}}
+
+
+  </body>
+  <script>
+    document.getElementById("new-subject-btn").addEventListener("click", () => {
+        document.getElementById("subject-form").style.display = "block";
+    });
+    </script>
   </body>
 </html>

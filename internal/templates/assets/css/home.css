@@ -4,9 +4,13 @@ body {
   font-family: Arial, sans-serif;
 }
 
+/**********************************************************************/
+/*MARK: TOP BAR
+/**********************************************************************/
+
 .top-bar {
   background: linear-gradient(135deg, #74ebd5, #acb6e5);
-  height: 80px;
+  height: 150px;
   width: 100%;
   display: flex;
   align-items: center;
@@ -15,7 +19,13 @@ body {
   box-sizing: border-box;
 }
 
-.left-buttons form,
+.left-images img {
+  height: 150px;
+  width: 150px;
+  left: 10%;
+}
+
+.middle-buttons form,
 .right-buttons {
   display: flex;
   gap: 10px;
@@ -24,6 +34,10 @@ body {
 .top-bar form {
   margin: 0;
 }
+
+/**********************************************************************/
+/*MARK: BTN
+/**********************************************************************/
 
 .btn {
   background-color: white;
@@ -45,6 +59,10 @@ body {
   background-color: #0056b3;
   color: white;
 }
+
+/**********************************************************************/
+/*MARK: POPUP
+/**********************************************************************/
 
 .popup {
   display: none;
@@ -102,3 +120,226 @@ body {
   display: flex;
 }
 
+/**********************************************************************/
+/*MARK: FILTERS
+/**********************************************************************/
+
+select#filters {
+  background-color: white;
+  color: #007BFF;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  font-family: inherit;
+  font-size: 16px;
+  line-height: 1.2;
+  appearance: none; /* Supprime le style par défaut du navigateur */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-align: center;
+  box-shadow: 0 0 0 1px #007BFF inset; /* Pour rappeler le contour bleu */
+  transition: all 0.2s ease;
+}
+
+/* effet au survol */
+select#filters:hover {
+  background-color: #0056b3;
+  color: white;
+}
+
+select#filters:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #0056b3 inset;
+}
+
+/* flèche personnalisée à droite */
+select#filters {
+  background-image: linear-gradient(45deg, transparent 50%, #007BFF 50%),
+                    linear-gradient(135deg, #007BFF 50%, transparent 50%);
+  background-position: calc(100% - 15px) center, calc(100% - 10px) center;
+  background-size: 5px 5px;
+  background-repeat: no-repeat;
+  padding-right: 30px; /* espace pour la flèche */
+}
+
+select#filters:hover {
+  background-image: linear-gradient(45deg, transparent 50%, white 50%),
+                    linear-gradient(135deg, white 50%, transparent 50%);
+}
+
+/**********************************************************************/
+/*MARK: CATEGORIES
+/**********************************************************************/
+
+select#categories {
+  background-color: white;
+  color: #007BFF;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  font-family: inherit;
+  font-size: 16px;
+  line-height: 1.2;
+  appearance: none; /* Supprime le style par défaut du navigateur */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-align: center;
+  box-shadow: 0 0 0 1px #007BFF inset; /* Pour rappeler le contour bleu */
+  transition: all 0.2s ease;
+}
+
+/* effet au survol */
+select#categories:hover {
+  background-color: #0056b3;
+  color: white;
+}
+
+select#categories:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #0056b3 inset;
+}
+
+/* flèche personnalisée à droite */
+select#categories {
+  background-image: linear-gradient(45deg, transparent 50%, #007BFF 50%),
+                    linear-gradient(135deg, #007BFF 50%, transparent 50%);
+  background-position: calc(100% - 15px) center, calc(100% - 10px) center;
+  background-size: 5px 5px;
+  background-repeat: no-repeat;
+  padding-right: 30px; /* espace pour la flèche */
+}
+
+select#categories:hover {
+  background-image: linear-gradient(45deg, transparent 50%, white 50%),
+                    linear-gradient(135deg, white 50%, transparent 50%);
+}
+
+/**********************************************************************/
+/*MARK: NEW SUBJECT
+/**********************************************************************/
+
+/* Container bouton "New Subject" */
+.mainpart {
+  display: flex;
+  justify-content: flex-start;
+  padding: 20px 0;
+}
+
+.mainpart .btn {
+  margin-left: 30px;
+}
+
+
+/* Boutons */
+.btn {
+  background-color: #007bff;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+}
+
+/**********************************************************************/
+/*MARK: FORMULAIRE DE CREATION DU SUJET
+/**********************************************************************/
+
+.form-container {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 600px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+form input,
+form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+form button {
+  width: 100%;
+}
+
+/**********************************************************************/
+/*MARK: LISTE DES SUJETS
+/**********************************************************************/
+
+h2 {
+  text-align: center;
+  margin: 40px 0 20px;
+  color: #333;
+}
+
+.topics-header {
+  display: flex;
+  justify-content: space-between;
+  background-color: rgba(0,0,0,0.15);
+  padding: 10px 20px;
+  max-width: 900px;
+  margin: 0 auto;
+  border-radius: 5px;
+  font-weight: bold;
+  color: #222;
+}
+
+.header-title {
+  flex: 1;
+}
+
+.header-content {
+  flex: 2;
+}
+
+.topic-banner {
+  display: flex;
+  justify-content: space-between;
+  background-color: rgba(255,255,255,0.9);
+  padding: 15px 20px;
+  margin: 10px auto;
+  max-width: 900px;
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.topic-banner a {
+  text-decoration: none;
+  color: #333;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.topic-banner:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+}
+
+.topic-title {
+  flex: 1;
+  font-weight: bold;
+}
+
+.topic-content {
+  flex: 2;
+  color: #555;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
