@@ -12,7 +12,7 @@ func RegisterUserInSQL(w http.ResponseWriter, username string, hashedPassword []
 	defer db.Close()      // Fermeture à la fin de la fonction.
 
 	// Injection dans la base SQL.
-	_ /* position */, err := db.Exec("INSERT INTO users (username, password, email) VALUES (?, ?, ?)", username, hashedPassword, email)
+	_ /* position */, err := db.Exec("INSERT INTO users (users_username, users_password, users_email) VALUES (?, ?, ?)", username, hashedPassword, email)
 	if err != nil {
 		http.Error(w, "Error during Register", http.StatusInternalServerError)
 		log.Println(err)
