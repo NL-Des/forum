@@ -2,7 +2,7 @@ PRAGMA foreign_keys = ON;
 
 CREATE TABLE IF NOT EXISTS users (
 	users_id INTEGER PRIMARY KEY AUTOINCREMENT,
-	users_username TEXT NOT NULL VARCHAR(50) UNIQUE,
+	users_username TEXT NOT NULL UNIQUE,
 	users_password TEXT NOT NULL,
 	users_email TEXT NOT NULL UNIQUE,
 	users_created_at DATETIME DEFAULT CURRENT_TIMESTAMP
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS messages (
 CREATE TABLE IF NOT EXISTS reactions (
 	reactions_id INTEGER PRIMARY KEY AUTOINCREMENT,
 	reactions_user_id INTEGER NOT NULL,
-	reactions_value INTEGER NOT NULL CHECK(value IN (-1, 1)), /* -1 = dislike, 1 = like */
+	reactions_value INTEGER NOT NULL CHECK(reactions_value IN (-1, 1)), /* -1 = dislike, 1 = like */
 	reactions_created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
 	reactions_updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
 	reactions_target_type TEXT NOT NULL CHECK(reactions_target_type IN ('topic','messages')), /*liste des "cibles": objets sur lesquels mettre des réactions*/
