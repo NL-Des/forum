@@ -34,6 +34,8 @@ func main() {
 	//Routage HTTP:
 	//handlers → front
 	mux.HandleFunc("/", handlers.Home)
+	mux.HandleFunc("/login", handlers.Authenticate)
+	mux.HandleFunc("/logout", handlers.Logout)
 	mux.HandleFunc("/register", handlers.RegisterHandler)
 	mux.HandleFunc("/create-topic", handlers.CreateTopicHandler)
 	mux.HandleFunc("/topic", handlers.TopicHandler)

@@ -7,6 +7,7 @@ type User struct {
 	Email    string
 }
 
+/*
 type UserRepository interface {
 	Create(user *User) error
 	GetByID(id int) (*User, error)
@@ -17,3 +18,4 @@ type UserService interface {
 	Register(username, email, password string) error
 	Authenticate(email, password string) (*User, error)
 }
+*/

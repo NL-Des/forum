@@ -5,6 +5,10 @@ CREATE TABLE IF NOT EXISTS users (
 	username TEXT NOT NULL UNIQUE,
 	password TEXT NOT NULL,
 	email TEXT NOT NULL UNIQUE,
+<<<<<<< HEAD
+=======
+	token TEXT,
+>>>>>>> testDB
 	created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 

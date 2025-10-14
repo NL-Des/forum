@@ -10,6 +10,11 @@ type Topic struct {
 	Content string
 }
 
+type Datas struct {
+	Topics     []Topic
+	IsLoggedIn bool
+}
+
 type Thread struct {
 	Topic Topic
 	Posts []Post
