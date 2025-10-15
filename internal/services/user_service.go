@@ -38,8 +38,6 @@ func (s *userService) Register(username, email, password string) error {
 
 func (s *userService) Authenticate(email, password string) (*domain.User, error) {
 	user, err := s.repo.GetByEmail(email)
-	fmt.Println(user.Email)
-	fmt.Println(user.Password)
 	if err != nil {
 		fmt.Println("❌ invalid email")
 		return nil, errors.New("❌ invalid email")

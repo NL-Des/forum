@@ -67,7 +67,7 @@
               </form>-->
             </div>
           </div>
-
+{{if .IsLoggedIn}} 
     <div class="mainpart">
     <button id="new-subject-btn" class="btn">+ New Subject</button>
 </div>
@@ -79,6 +79,7 @@
         <button type="submit" class="btn">Publish</button>
     </form>
 </div>
+{{end}}
 
 <h2>Latest topics</h2>
 
