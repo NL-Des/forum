@@ -20,9 +20,13 @@ func InitHandlers(us services.UserService) {
 
 	// Précharger tous les templates une seule fois
 	var err error
-	templates, err = template.ParseGlob(filepath.Join("internal", "templates", "*.html"))
+	templates, err = template.ParseGlob(filepath.Join("internal/templates/ *.html"))
 	if err != nil {
-		panic("❌ error parsing templates: " + err.Error())
+		templates, err = template.ParseGlob("../../internal/templates/*.html")
+		if err != nil {
+			panic("❌ error parsing templates: " + err.Error())
+		}
+
 	}
 }
 
@@ -60,6 +64,11 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 func Authenticate(w http.ResponseWriter, r *http.Request) {
+
+	if userService == nil {
+		http.Error(w, "❌ internal error: userService is not initialized", http.StatusInternalServerError)
+		return
+	}
 
 	if r.Method == http.MethodGet {
 		// Affiche le formulaire login via home.html

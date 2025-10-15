@@ -42,15 +42,9 @@
               <label for="login-popup" class="close">&times;</label>
               <h2>Connexion</h2>
               <form action="/login" method="POST">
-<<<<<<< HEAD
-                <input type="text" name="username" placeholder="username" required>
-                <input type="password" name="password" placeholder="password" required>
-                <button type="submit">Login</button>
-=======
                 <input type="email" name="email" placeholder="email" required>
                 <input type="password" name="password" placeholder="password" required>
                 <button type="submit">Se connecter</button>
->>>>>>> testDB
               </form>
             </div>
           </div>    
@@ -93,7 +87,7 @@
     <span class="header-content">Content</span>
 </div>
 
-{{range .}}
+{{range .Topics}}
 <div class="topic-banner">
     <a href="/topic?id={{.ID}}">
         <span class="topic-title">{{.Title}}</span>
