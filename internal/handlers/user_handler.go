@@ -5,17 +5,17 @@ import (
 	"encoding/base64"
 	"encoding/hex"
 	"fmt"
-	"forum/internal/services"
+	"forum/internal/domain"
 	"html/template"
 	"net/http"
 	"path/filepath"
 	"time"
 )
 
-var userService services.UserService
+var userService domain.UserService
 var templates *template.Template
 
-func InitHandlers(us services.UserService) {
+func InitHandlers(us domain.UserService) {
 	userService = us
 
 	// Précharger tous les templates une seule fois
@@ -27,16 +27,13 @@ func InitHandlers(us services.UserService) {
 }
 
 func renderTemplate(w http.ResponseWriter, tmpl string, data interface{}) {
-	/* err := templates.ExecuteTemplate(w, tmpl, data) */
-	tmplPath := filepath.Join("../../internal/templates", tmpl)
-	t, err := template.ParseFiles(tmplPath)
+	err := templates.ExecuteTemplate(w, tmpl, data)
 	if err != nil {
 		http.Error(w, "❌ internal error: "+err.Error(), http.StatusInternalServerError)
+		fmt.Println("template error: %v", err)
 	}
-	t.Execute(w, data)
 }
 func Logout(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("testttetstt")
 	if r.Method == http.MethodGet {
 		// Affiche le formulaire logout via home.html
 		renderTemplate(w, "home.html", nil)
@@ -70,12 +67,12 @@ func Authenticate(w http.ResponseWriter, r *http.Request) {
 	// Méthode POST : récupération du formulaire
 	if err := r.ParseForm(); err != nil {
 		http.Error(w, "Formulaire invalide", http.StatusBadRequest)
+		fmt.Println("erreur formulaire")
 		return
 	}
 
 	email := r.FormValue("email")
 	password := r.FormValue("password")
-
 	_, err := userService.Authenticate(email, password)
 	if err != nil {
 		// Réaffiche home.html avec message d'erreur

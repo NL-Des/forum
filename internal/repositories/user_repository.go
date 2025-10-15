@@ -5,25 +5,11 @@ import (
 	"forum/internal/domain"
 )
 
-type UserRepository interface {
-	Create(user *domain.User) error
-	GetByID(id int) (*domain.User, error)
-	GetByEmail(email string) (*domain.User, error)
-	GetByUsername(Logusername string) (*domain.User, error)
-	InsertToken(Token, email string) error
-	GetUserByToken(Token string) (*domain.User, error)
-	DeleteTokenLog(Token string) error
-}
-
 type userRepository struct {
 	db *sql.DB
 }
 
-/*
-constructeur: on crée une interface indirecte (UserRep)  (qui sera envoyée au service)
-à partir du contenu concret de la BdD (userRep) qui ne doit pas être exporté directement
-*/
-func NewUserRepository(db *sql.DB) UserRepository {
+func NewUserRepository(db *sql.DB) domain.UserRepository {
 	return &userRepository{db: db}
 }
 

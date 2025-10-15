@@ -1,7 +1,10 @@
 package main
 
 import (
+	"forum/internal/config"
 	"forum/internal/handlers"
+	"forum/internal/repositories"
+	"forum/internal/services"
 	"log"
 	"net/http"
 	"os"
@@ -16,7 +19,8 @@ func main() {
 	fmt.Println(string(hash))*/
 
 	mux := http.NewServeMux()
-
+	db := config.InitDB()
+	defer db.Close()
 	// Charger le fichier .env
 	errEnv := godotenv.Load()
 	if errEnv != nil {
@@ -26,10 +30,10 @@ func main() {
 	//Lancement de la BdD:
 	//Injection des dépendances:
 	//cheminement BdD → repositories → services → handlers
-	/*
-		userRepo := repositories.NewUserRepository(db)
-		userService := services.NewUserService(userRepo)
-		handlers.InitHandlers(userService)*/
+
+	userRepo := repositories.NewUserRepository(db)
+	userService := services.NewUserService(userRepo)
+	handlers.InitHandlers(userService)
 
 	//Routage HTTP:
 	//handlers → front
@@ -41,7 +45,7 @@ func main() {
 	mux.HandleFunc("/topic", handlers.TopicHandler)
 	mux.HandleFunc("/add-post", handlers.AddPostHandler)
 
-	fs := http.FileServer(http.Dir("../../internal/templates/assets"))
+	fs := http.FileServer(http.Dir("internal/templates/assets"))
 	mux.Handle("/assets/", http.StripPrefix("/assets/", fs))
 
 	//Lancement serveur:

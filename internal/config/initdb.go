@@ -2,6 +2,7 @@ package config
 
 import (
 	"database/sql"
+	//"forum/internal/repositories"
 	"log"
 
 	_ "github.com/mattn/go-sqlite3"

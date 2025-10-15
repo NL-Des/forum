@@ -13,13 +13,9 @@ INSERT INTO categories (name) VALUES
 	("K.");
 
 INSERT INTO users (username, password, email) VALUES 
-<<<<<<< HEAD
-	("fadadu13", "$2a$10$LYX/BbvnZ8ylONo86SoqZuJkRCktFdqBg1xUBr9Kv6nAFWBo1pWHe", "fafa@wanadoo.com"),
-	("kékédu76", "$2a$10$ItmnyHH0GxmDBxQaMBIcVufiwcjVx0JsEzfpr0aW7xGY6gWP4.9Mm", "stevenpq@aol.fr");
-=======
-	("fadadu13", "$2a$10$td16dthAdwiagWZuEWFjnuYNofzfhR/oXG/KRTeukYBQJP6BbRTWG", "fafa@wanadoo.com"),
-	("kékédu76", "76hashedpassword", "stevenpq@aol.fr");
->>>>>>> testDB
+	("fadadu13", "$2a$10$TE2ClmvgHd6p7I.IM.kyNO.MYUy3RNfpzz4R3UDE54yAX1MMufaXS", "fafa@wanadoo.com"),
+	("kékédu76", "$2a$10$HB9ILjInaP/X2P9rHMgWmOBe9joo2I89z87J5IA7FgPhphz7r0fZ.", "stevenpq@aol.fr");
+
 
 
 INSERT INTO topics (title, content, category_id, user_id) VALUES 

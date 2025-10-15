@@ -4,24 +4,15 @@ import (
 	"errors"
 	"fmt"
 	"forum/internal/domain"
-	"forum/internal/repositories"
 
 	"golang.org/x/crypto/bcrypt"
 )
 
-type UserService interface {
-	Register(username, email, password string) error
-	Authenticate(email, password string) (*domain.User, error)
-	TokenLogIn(email, Token string) error
-	Home(Token string) (*domain.User, error)
-	Logout(Token string) error
-}
-
 type userService struct {
-	repo repositories.UserRepository
+	repo domain.UserRepository
 }
 
-func NewUserService(repo repositories.UserRepository) UserService {
+func NewUserService(repo domain.UserRepository) domain.UserService {
 	return &userService{repo: repo}
 }
 
@@ -36,25 +27,28 @@ func (s *userService) Register(username, email, password string) error {
 		return err
 	}
 
-	user := &domain.User{
+	user := domain.User{
 		Username: username,
 		Email:    email,
 		Password: string(hashedPassword),
 	}
 
-	return s.repo.Create(user)
+	return s.repo.Create(&user)
 }
 
 func (s *userService) Authenticate(email, password string) (*domain.User, error) {
 	user, err := s.repo.GetByEmail(email)
+	fmt.Println(user.Email)
+	fmt.Println(user.Password)
 	if err != nil {
-		return nil, errors.New("❌ invalid email or password")
+		fmt.Println("❌ invalid email")
+		return nil, errors.New("❌ invalid email")
 	}
 
 	err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
-	fmt.Println("hashage de password")
 	if err != nil {
-		return nil, errors.New("❌ invalid email or password")
+		fmt.Println("❌ invalid password")
+		return nil, errors.New("❌ invalid password")
 	}
 	fmt.Println("hashage de password réussi")
 
