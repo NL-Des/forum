@@ -23,9 +23,7 @@
           </select>
         </form>
       </div>
-
       <div class="right-buttons">
-
         <div class="right-buttons">
           {{if .IsLoggedIn}} 
               <form action="/logout" method="POST">
@@ -34,52 +32,43 @@
               <!--<button href="/logout" type="submit" class="btn">Logout</button>-->
           {{else}}
           <!-- Popup de login -->
-          <input type="checkbox" id="login-popup" hidden>
+          <!--<input type="checkbox" id="login-popup" hidden>-->
+          <input type="checkbox" id="login-popup" hidden {{with .Error}}checked{{end}}>
+
           <label for="login-popup" class="btn">Login</label>        
 
           <div class="popup">
-            <div class="popup-content">
+            <div class="popup-content" id="login-popup">
               <label for="login-popup" class="close">&times;</label>
               <h2>Connexion</h2>
               <form action="/login" method="POST">
-                <input type="email" name="email" placeholder="email" required>
+                {{with .Error}}
+                  <p style="color:red; font-weight:bold;">{{.}}</p>
+                {{end}}
+                <input type="email" name="email" placeholder="email" value="{{.Email}}" required>
                 <input type="password" name="password" placeholder="password" required>
+                  
                 <button type="submit">Se connecter</button>
               </form>
             </div>
           </div>    
           {{end}}    
-
-         
-
           <a href="/register" class="btn">Register</a>        
-
         </div>
-
-        <!--<form>
-          <button type="submit" class="btn">Logout</button>
-        </form>
-
-        <form>
-          <a href="/register" class="btn">Register</a>
-
-
-              </form>-->
             </div>
           </div>
-{{if .IsLoggedIn}} 
-    <div class="mainpart">
-    <button id="new-subject-btn" class="btn">+ New Subject</button>
-</div>
-
-<div id="subject-form" class="form-container" style="display: none;">
-    <form method="POST" action="/create-topic">
-        <input type="text" name="title" placeholder="Object of subject" required>
-        <textarea name="content" placeholder="Topic content" required></textarea>
-        <button type="submit" class="btn">Publish</button>
-    </form>
-</div>
-{{end}}
+          {{if .IsLoggedIn}} 
+              <div class="mainpart">
+              <button id="new-subject-btn" class="btn">+ New Subject</button>
+          </div>
+        <div id="subject-form" class="form-container" style="display: none;">
+            <form method="POST" action="/create-topic">
+                <input type="text" name="title" placeholder="Object of subject" required>
+                <textarea name="content" placeholder="Topic content" required></textarea>
+                <button type="submit" class="btn">Publish</button>
+            </form>
+        </div>
+        {{end}}
 
 <h2>Latest topics</h2>
 
@@ -111,6 +100,7 @@
     document.getElementById("new-subject-btn").addEventListener("click", () => {
         document.getElementById("subject-form").style.display = "block";
     });
+
     </script>
   </body>
 </html>

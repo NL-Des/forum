@@ -38,12 +38,12 @@ func Home(w http.ResponseWriter, r *http.Request) {
 		Topics:     topics,
 		IsLoggedIn: isLoggedIn,
 	}
-
-	if err := tpl.Execute(w, datas); err != nil {
+	renderTemplate(w, "home.html", datas)
+	/*if err := tpl.Execute(w, datas); err != nil {
 		log.Println("Erreur template :", err)
 		http.Error(w, "Erreur lors du chargement du template: "+err.Error(), http.StatusInternalServerError)
 		return
-	}
+	}*/
 
 	/* if err := tpl.Execute(w, nil); err != nil {
 		log.Println("Erreur template :", err)

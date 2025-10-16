@@ -5,6 +5,7 @@ import (
 	"encoding/base64"
 	"encoding/hex"
 	"fmt"
+	"forum/internal/database"
 	"forum/internal/domain"
 	"html/template"
 	"net/http"
@@ -75,10 +76,16 @@ func Authenticate(w http.ResponseWriter, r *http.Request) {
 	password := r.FormValue("password")
 	_, err := userService.Authenticate(email, password)
 	if err != nil {
-		// Réaffiche home.html avec message d'erreur
-		renderTemplate(w, "home.html", map[string]string{
-			"Error": err.Error(),
-		})
+		topics, _ := database.GetAllTopics()
+
+		data := database.Datas{
+			Error:      err.Error(),
+			Email:      email,
+			Topics:     topics,
+			IsLoggedIn: false,
+		}
+
+		renderTemplate(w, "home.html", data)
 		return
 	}
 

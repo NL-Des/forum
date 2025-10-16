@@ -15,6 +15,8 @@ type Topic struct {
 type Datas struct {
 	Topics     []Topic
 	IsLoggedIn bool
+	Error      string
+	Email      string
 }
 
 type Thread struct {
