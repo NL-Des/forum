@@ -2,6 +2,7 @@ package database
 
 import (
 	"fmt"
+	"time"
 
 	_ "github.com/mattn/go-sqlite3"
 )
@@ -25,7 +26,7 @@ type Thread struct {
 type Post struct {
 	ID        int
 	Content   string
-	CreatedAt string
+	CreatedAt time.Time
 }
 
 func GetAllTopics() ([]Topic, error) {
