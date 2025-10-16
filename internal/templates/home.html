@@ -6,8 +6,9 @@
   <body>
     <div class="top-bar">
       <div class="left-images">
-    <img src="assets/img/logoforum.png" alt="Image gauche">
-  </div>
+        <a href="http://localhost:8086/"></a>
+          <img src="assets/img/logoforum.png" alt="Image gauche">
+      </div>
       <div class="middle-buttons">
         <form>
           <select name="filters" id="filters">
@@ -48,7 +49,8 @@
               </form>
             </div>
           </div>    
-          {{end}}    
+          {{end}}
+          <!-- Ajout de la condition si connecté pour le bouton enregistré -->
           {{if .IsLoggedIn}}
           {{else}}
           <a href="/register" class="btn">Register</a>        
