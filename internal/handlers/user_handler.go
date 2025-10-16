@@ -117,6 +117,8 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	email := r.FormValue("email")
 	password := r.FormValue("password")
 
+	fmt.Println(username, email, password)
+
 	err := userService.Register(username, email, password)
 	if err != nil {
 		// Réaffiche le formulaire avec une erreur
