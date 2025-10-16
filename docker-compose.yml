@@ -10,13 +10,13 @@
 # exécute docker dans le terminal, nous évoluons alors dans le container en lui-même.
 services:
   forum:  
-    #image: golang:1.24.0 # Seconde manière de faire.
+    #image: golang:1.22.2 # Seconde manière de faire.
     build: . # va chercher le fichier dockerfile.
     container_name: forum
     restart: unless-stopped
     init: true
-    volumes: 
-      - ./:/app
+    # volumes: 
+      # - ./:/app
       # - ./test:/app/test3000
     ports:
       - 8086:8086 # le premier c'est mon pc, le second c'est le container

@@ -1,14 +1,14 @@
-FROM golang:1.21
+FROM golang:1.24.0
 
-WORKDIR /app
+# WORKDIR /app
 
-COPY go.mod ./
-COPY go.sum ./
-RUN go mod download
+# COPY . .
 
-COPY . .
+# RUN go mod tidy
+# RUN go build -o forum
 
-RUN go build -o main ./cmd/server
+# EXPOSE 8086
 
-#CMD ["/app/main"]?
-CMD ["./forum"]
+# CMD ["./forum"]
+
+# CMD go mod tidy && touch toto && go run main.go
