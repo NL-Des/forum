@@ -26,7 +26,7 @@ type Thread struct {
 type Post struct {
 	ID        int
 	Content   string
-	CreatedAt time.Time
+	CreatedAt time.Time "Monday, 02 Jan 2006"
 }
 
 func GetAllTopics() ([]Topic, error) {
