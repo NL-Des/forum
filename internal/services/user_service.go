@@ -17,7 +17,7 @@ func NewUserService(repo domain.UserRepository) domain.UserService {
 }
 
 func (s *userService) Register(username, email, password string) error {
-	existing, err := s.repo.GetByEmail(email)
+	existing, err := s.repo.GetUserByEmail(email)
 	if err == nil && existing != nil {
 		return errors.New("❌ email already registered")
 	}
@@ -37,7 +37,7 @@ func (s *userService) Register(username, email, password string) error {
 }
 
 func (s *userService) Authenticate(email, password string) (*domain.User, error) {
-	user, err := s.repo.GetByEmail(email)
+	user, err := s.repo.GetUserByEmail(email)
 	if err != nil {
 		fmt.Println("❌ invalid email")
 		return nil, errors.New("❌ invalid email")
@@ -48,7 +48,7 @@ func (s *userService) Authenticate(email, password string) (*domain.User, error)
 		fmt.Println("❌ invalid password")
 		return nil, errors.New("❌ invalid password")
 	}
-	fmt.Println("hashage de password réussi")
+	fmt.Println("✅ hashing password successful")
 
 	return user, nil
 }

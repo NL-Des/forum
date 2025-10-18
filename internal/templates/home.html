@@ -11,15 +11,15 @@
       <div class="middle-buttons">
         <form>
           <select name="filters" id="filters">
-            <option>select filter</option>
-            <option>your messages</option>
-            <option>liked posts</option>
+            <option>selection par filtre</option>
+            <option>vos messages</option>
+            <option>liste des 'likes'</option>
           </select>
           <select name="categories" id="categories">
-            <option value="">select categories</option>
-            <option>categorie 1</option>
-            <option>categorie 2</option>
-            <option>categorie 3</option>
+            <option value="">selection par catégorie</option>
+            <option>catégorie 1</option>
+            <option>catégorie 2</option>
+            <option>catégorie 3</option>
           </select>
         </form>
       </div>
@@ -29,18 +29,18 @@
         <div class="right-buttons">
           {{if .IsLoggedIn}} 
               <form action="/logout" method="POST">
-                <button type="submit" class="btn">Logout</button>
+                <button type="submit" class="btn">Se déconnecter</button>
               </form>
               <!--<button href="/logout" type="submit" class="btn">Logout</button>-->
           {{else}}
           <!-- Popup de login -->
           <input type="checkbox" id="login-popup" hidden>
-          <label for="login-popup" class="btn">Login</label>        
+          <label for="login-popup" class="btn">Se connecter</label>        
 
           <div class="popup">
             <div class="popup-content">
               <label for="login-popup" class="close">&times;</label>
-              <h2>Connexion</h2>
+              <h2>Connection</h2>
               <form action="/login" method="POST">
                 <input type="email" name="email" placeholder="email" required>
                 <input type="password" name="password" placeholder="password" required>
@@ -52,7 +52,7 @@
 
          
 
-          <a href="/register" class="btn">Register</a>        
+          <a href="/register" class="btn">S'inscrire</a>        
 
         </div>
 
@@ -69,23 +69,23 @@
           </div>
 {{if .IsLoggedIn}} 
     <div class="mainpart">
-    <button id="new-subject-btn" class="btn">+ New Subject</button>
+    <button id="new-subject-btn" class="btn">+ nouveau sujet</button>
 </div>
 
 <div id="subject-form" class="form-container" style="display: none;">
     <form method="POST" action="/create-topic">
         <input type="text" name="title" placeholder="Object of subject" required>
         <textarea name="content" placeholder="Topic content" required></textarea>
-        <button type="submit" class="btn">Publish</button>
+        <button type="submit" class="btn">Publier</button>
     </form>
 </div>
 {{end}}
 
-<h2>Latest topics</h2>
+<h2>Derniers Sujets</h2>
 
 <div class="topics-header">
-    <span class="header-title">Object</span>
-    <span class="header-content">Content</span>
+    <span class="header-title">Titre</span>
+    <span class="header-content">Texte</span>
 </div>
 
 {{range .Topics}}
@@ -112,5 +112,4 @@
         document.getElementById("subject-form").style.display = "block";
     });
     </script>
-  </body>
 </html>

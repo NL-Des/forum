@@ -5,34 +5,12 @@ import (
 	"encoding/base64"
 	"encoding/hex"
 	"fmt"
-	"forum/internal/domain"
-	"html/template"
 	"net/http"
-	"path/filepath"
 	"time"
 )
 
-var userService domain.UserService
-var templates *template.Template
-
-func InitHandlers(us domain.UserService) {
-	userService = us
-
-	// Précharger tous les templates une seule fois
-	var err error
-	templates, err = template.ParseGlob(filepath.Join("internal", "templates", "*.html"))
-	if err != nil {
-		panic("❌ error parsing templates: " + err.Error())
-	}
-}
-
-func renderTemplate(w http.ResponseWriter, tmpl string, data interface{}) {
-	err := templates.ExecuteTemplate(w, tmpl, data)
-	if err != nil {
-		http.Error(w, "❌ internal error: "+err.Error(), http.StatusInternalServerError)
-		fmt.Println("template error: %v", err)
-	}
-}
+/*MARK: Logout
+ */
 func Logout(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
 		// Affiche le formulaire logout via home.html
@@ -56,18 +34,19 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 	}
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
-func Authenticate(w http.ResponseWriter, r *http.Request) {
 
+/*MARK: Authenticate
+ */
+func Authenticate(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
 		// Affiche le formulaire login via home.html
 		renderTemplate(w, "home.html", nil)
 		return
 	}
-
 	// Méthode POST : récupération du formulaire
 	if err := r.ParseForm(); err != nil {
-		http.Error(w, "Formulaire invalide", http.StatusBadRequest)
-		fmt.Println("erreur formulaire")
+		http.Error(w, "❌ invalid form", http.StatusBadRequest)
+		fmt.Println("❌ error processing form")
 		return
 	}
 
@@ -77,14 +56,14 @@ func Authenticate(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		// Réaffiche home.html avec message d'erreur
 		renderTemplate(w, "home.html", map[string]string{
-			"Error": err.Error(),
+			"❌ Error": err.Error(),
 		})
 		return
 	}
 
 	bytes := make([]byte, 32)
 	if _, err := rand.Read(bytes); err != nil {
-		fmt.Println("erreur : impossible de générer le token ")
+		fmt.Println("❌ error generating token ")
 	}
 
 	sessionToken := base64.URLEncoding.EncodeToString(bytes)
@@ -101,12 +80,13 @@ func Authenticate(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 
+/*MARK: Register
+ */
 func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
 		renderTemplate(w, "register.html", nil)
 		return
 	}
-
 	// Méthode POST : récupération du formulaire
 	if err := r.ParseForm(); err != nil {
 		http.Error(w, "❌ error invalid form", http.StatusBadRequest)
@@ -130,6 +110,9 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 
 }
+
+/*MARK: Session
+ */
 func generateSessionID() string {
 	b := make([]byte, 32)
 	rand.Read(b)

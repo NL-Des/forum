@@ -3,16 +3,15 @@ package handlers
 import (
 	"fmt"
 	"html/template"
-	"log"
 	"net/http"
 	"strconv"
-
-	"forum/internal/database"
 )
 
+/*MARK: CreateTopic
+ */
 func CreateTopicHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
-		http.Error(w, "Méthode non autorisée", http.StatusMethodNotAllowed)
+		http.Error(w, "❌ unauthorized method", http.StatusMethodNotAllowed)
 		return
 	}
 
@@ -21,61 +20,59 @@ func CreateTopicHandler(w http.ResponseWriter, r *http.Request) {
 	//log.Println("Reçu :", title, content)
 
 	if title == "" || content == "" {
-		http.Error(w, "Champs requis manquants", http.StatusBadRequest)
+		http.Error(w, "❌ missing required fields", http.StatusBadRequest)
 		return
 	}
 
-	err := database.InsertTopic(title, content, 0)
+	err := topicPostService.CreateTopic(title, content, 0)
 	if err != nil {
-		http.Error(w, "Erreur lors de l'enregistrement :"+err.Error(), http.StatusInternalServerError)
+		http.Error(w, "❌ error inserting topic"+err.Error(), http.StatusInternalServerError)
 		return
 	}
 
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 
+// affichage d'un sujet et ses messages
+/*MARK: Topic+Posts
+ */
 func TopicHandler(w http.ResponseWriter, r *http.Request) {
 	idStr := r.URL.Query().Get("id")
 	if idStr == "" {
-		http.Error(w, "ID manquant", http.StatusBadRequest)
+		http.Error(w, "❌ missing ID", http.StatusBadRequest)
 		return
 	}
 
 	id, err := strconv.Atoi(idStr)
 	if err != nil {
-		http.Error(w, "ID invalide", http.StatusBadRequest)
+		http.Error(w, "❌ invalid ID", http.StatusBadRequest)
 		return
 	}
 
-	topic, err := database.GetTopicByID(id)
+	thread, err := topicPostService.GetThreadByID(id)
 	if err != nil {
-		http.Error(w, "Sujet introuvable", http.StatusNotFound)
+		http.Error(w, "❌ topic not found", http.StatusNotFound)
 		return
 	}
-	posts, err := database.GetPostsByTopicID(id)
-	if err != nil {
-		log.Println("⚠️ Erreur récupération messages :", err)
-		posts = []database.Post{}
-	}
-
-	data := database.Thread{Topic: topic, Posts: posts}
 
 	tmpl := template.Must(template.ParseFiles("internal/templates/topic.html"))
-	tmpl.Execute(w, data)
+	tmpl.Execute(w, thread)
 }
 
+/*MARK: AddPost
+ */
 func AddPostHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
-		http.Error(w, "Méthode non autorisée", http.StatusMethodNotAllowed)
+		http.Error(w, "❌ unauthorized method", http.StatusMethodNotAllowed)
 		return
 	}
 
 	topicID, _ := strconv.Atoi(r.FormValue("topic_id"))
 	content := r.FormValue("content")
 
-	err := database.InsertPost(topicID, content, 0)
+	err := topicPostService.AddPost(topicID, content, 0)
 	if err != nil {
-		http.Error(w, "Erreur lors de l'ajout du message", http.StatusInternalServerError)
+		http.Error(w, "❌ error inserting post:"+err.Error(), http.StatusInternalServerError)
 		return
 	}
 
