@@ -1,115 +1,115 @@
-<html>
-  <head>
-    <title>forum</title>
-    <link rel="stylesheet" href="assets/css/home.css">
-  </head>
-  <body>
-    <div class="top-bar">
-      <div class="left-images">
-    <img src="assets/img/logoforum.png" alt="Image gauche">
-  </div>
-      <div class="middle-buttons">
-        <form>
-          <select name="filters" id="filters">
-            <option>selection par filtre</option>
-            <option>vos messages</option>
-            <option>liste des 'likes'</option>
-          </select>
-          <select name="categories" id="categories">
-            <option value="">selection par catégorie</option>
-            <option>catégorie 1</option>
-            <option>catégorie 2</option>
-            <option>catégorie 3</option>
-          </select>
-        </form>
-      </div>
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>forum</title>
+		<link rel="stylesheet" href="assets/css/home.css">
+	</head>
 
-      <div class="right-buttons">
+	<body>
+		<div class="top-bar">
+			<div class="left-images">
+				<img src="assets/img/logoforum.png" alt="Image gauche">
+			</div>
+			<div class="middle-buttons">
+				<form>
+					<select name="filters" id="filters">
+						<option>selection par filtre</option>
+						<option>vos messages</option>
+						<option>liste des 'likes'</option>
+					</select>
+					<select name="categories" id="categories">
+						<option value="">selection par catégorie</option>
+						<option>catégorie 1</option>
+						<option>catégorie 2</option>
+						<option>catégorie 3</option>
+					</select>
+				</form>
+			</div>
 
-        <div class="right-buttons">
-          {{if .IsLoggedIn}} 
-              <form action="/logout" method="POST">
-                <button type="submit" class="btn">Se déconnecter</button>
-              </form>
-              <!--<button href="/logout" type="submit" class="btn">Logout</button>-->
-          {{else}}
-          <!-- Popup de login -->
-          <input type="checkbox" id="login-popup" hidden>
-          <label for="login-popup" class="btn">Se connecter</label>        
+			<div class="right-buttons">
+				<div class="right-buttons">
+					{{if .IsLoggedIn}} 
+						<form action="/logout" method="POST">
+							<button type="submit" class="btn">Se déconnecter</button>
+						</form>
+						<!--<button href="/logout" type="submit" class="btn">Logout</button>-->
+					{{else}}
+						<!-- Popup de login -->
+						<input type="checkbox" id="login-popup" hidden>
+						<label for="login-popup" class="btn">Se connecter</label>        
+						<div class="popup">
+							<div class="popup-content">
+								<label for="login-popup" class="close">&times;</label>
+								<h2>Connection</h2>
+								<form action="/login" method="POST">
+									<input type="email" name="email" placeholder="email" required>
+									<input type="password" name="password" placeholder="password" required>
+									<button type="submit">Se connecter</button>
+								</form>
+							</div>
+						</div>    
+					{{end}}
+					<a href="/register" class="btn">S'inscrire</a>
+				</div>
 
-          <div class="popup">
-            <div class="popup-content">
-              <label for="login-popup" class="close">&times;</label>
-              <h2>Connection</h2>
-              <form action="/login" method="POST">
-                <input type="email" name="email" placeholder="email" required>
-                <input type="password" name="password" placeholder="password" required>
-                <button type="submit">Se connecter</button>
-              </form>
-            </div>
-          </div>    
-          {{end}}    
+				<!--<form>
+				<button type="submit" class="btn">Logout</button>
+				</form>
 
-         
-
-          <a href="/register" class="btn">S'inscrire</a>        
-
-        </div>
-
-        <!--<form>
-          <button type="submit" class="btn">Logout</button>
-        </form>
-
-        <form>
-          <a href="/register" class="btn">Register</a>
+				<form>
+				<a href="/register" class="btn">Register</a>
 
 
-              </form>-->
-            </div>
-          </div>
-{{if .IsLoggedIn}} 
-    <div class="mainpart">
-    <button id="new-subject-btn" class="btn">+ nouveau sujet</button>
-</div>
+					</form>-->
+			</div>
+		</div>
 
-<div id="subject-form" class="form-container" style="display: none;">
-    <form method="POST" action="/create-topic">
-        <input type="text" name="title" placeholder="Object of subject" required>
-        <textarea name="content" placeholder="Topic content" required></textarea>
-        <button type="submit" class="btn">Publier</button>
-    </form>
-</div>
-{{end}}
+		{{if .IsLoggedIn}} 
+			<div class="mainpart">
+				<button id="new-subject-btn" class="btn">+ nouveau sujet</button>
+			</div>
 
-<h2>Derniers Sujets</h2>
+			<div id="subject-form" class="form-container" style="display: none;">
+				<form method="POST" action="/create-topic">
+					<input type="text" name="title" placeholder="Object of subject" required>
+					<textarea name="content" placeholder="Topic content" required></textarea>
+					<button type="submit" class="btn">Publier</button>
+				</form>
+			</div>
+		{{end}}
 
-<div class="topics-header">
-    <span class="header-title">Titre</span>
-    <span class="header-content">Texte</span>
-</div>
+		<h2>Derniers Sujets</h2>
 
-{{range .Topics}}
-<div class="topic-banner">
-    <a href="/topic?id={{.ID}}">
-        <span class="topic-title">{{.Title}}</span>
-        <span class="topic-content">
-            {{if gt (len .Content) 80}}
-                {{slice .Content 0 80}}...
-            {{else}}
-                {{.Content}}
-            {{end}}
-        </span>
-    </a>
-</div>
-{{else}}
-<p>Aucun sujet pour le moment.</p>
-{{end}}
+		<div class="topics-header">
+			<span class="header-title">Titre</span>
+			<span class="header-content">Texte</span>
+		</div>
 
+		{{range .Topics}}
+			<div class="topic-banner">
+				<a href="/thread?id={{.ID}}">
+					<span class="topic-title">{{.Title}}</span>
+					<span class="topic-content">
+						{{if gt (len .Content) 80}}
+							{{slice .Content 0 80}}...
+						{{else}}
+							{{.Content}}
+						{{end}}
+					</span>
+					<p>{{.Likes}}:👍 | {{.Dislikes}}:👎</p>
+				</a>
+			</div>
+		{{else}}
+			<p>Aucun sujet pour le moment.</p>
+		{{end}}			
 
-  </body>
-  <script>
-    document.getElementById("new-subject-btn").addEventListener("click", () => {
-        document.getElementById("subject-form").style.display = "block";
-    });
-    </script>
+	</body>
+
+	<script>
+		document.getElementById("new-subject-btn").addEventListener("click", () => {
+			document.getElementById("subject-form").style.display = "block";
+		});
+	</script>
 </html>

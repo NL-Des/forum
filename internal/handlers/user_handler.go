@@ -14,7 +14,7 @@ import (
 func LogoutHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
 		// Affiche le formulaire logout via home.html
-		renderTemplate(w, "home.html", nil)
+		RenderTemplate(w, "home.html", nil)
 		return
 	}
 	cookie, err := r.Cookie("session_token")
@@ -40,7 +40,7 @@ func LogoutHandler(w http.ResponseWriter, r *http.Request) {
 func AuthenticateHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
 		// Affiche le formulaire login via home.html
-		renderTemplate(w, "home.html", nil)
+		RenderTemplate(w, "home.html", nil)
 		return
 	}
 	// Méthode POST : récupération du formulaire
@@ -55,7 +55,7 @@ func AuthenticateHandler(w http.ResponseWriter, r *http.Request) {
 	_, err := userService.Authenticate(email, password)
 	if err != nil {
 		// Réaffiche home.html avec message d'erreur
-		renderTemplate(w, "home.html", map[string]string{
+		RenderTemplate(w, "home.html", map[string]string{
 			"❌ Error": err.Error(),
 		})
 		return
@@ -84,7 +84,7 @@ func AuthenticateHandler(w http.ResponseWriter, r *http.Request) {
  */
 func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
-		renderTemplate(w, "register.html", nil)
+		RenderTemplate(w, "register.html", nil)
 		return
 	}
 	// Méthode POST : récupération du formulaire
@@ -100,7 +100,7 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	err := userService.Register(username, email, password)
 	if err != nil {
 		// Réaffiche le formulaire avec une erreur
-		renderTemplate(w, "register.html", map[string]string{
+		RenderTemplate(w, "register.html", map[string]string{
 			"❌ error": err.Error(),
 		})
 		return
