@@ -3,6 +3,7 @@ package handlers
 import (
 	"fmt"
 	"html/template"
+	"log"
 	"net/http"
 	"strconv"
 )
@@ -55,6 +56,18 @@ func TopicHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Injection des likes/dislikes pour le topic
+	likes, dislikes, _ := reactionService.GetReactionCounts("topics", int64(thread.Topic.ID))
+	thread.Topic.Likes = likes
+	thread.Topic.Dislikes = dislikes
+
+	// Injection des likes/dislikes pour chaque post
+	for i := range thread.Posts {
+		plikes, pdislikes, _ := reactionService.GetReactionCounts("posts", int64(thread.Posts[i].ID))
+		thread.Posts[i].Likes = plikes
+		thread.Posts[i].Dislikes = pdislikes
+	}
+
 	tmpl := template.Must(template.ParseFiles("internal/templates/topic.html"))
 	tmpl.Execute(w, thread)
 }
@@ -67,14 +80,26 @@ func AddPostHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	topicID, _ := strconv.Atoi(r.FormValue("topic_id"))
-	content := r.FormValue("content")
-
-	err := topicPostService.AddPost(topicID, content, 0)
-	if err != nil {
-		http.Error(w, "❌ error inserting post:"+err.Error(), http.StatusInternalServerError)
+	// parser le formulaire
+	if err := r.ParseForm(); err != nil {
+		http.Error(w, "❌ cannot parse form: "+err.Error(), http.StatusBadRequest)
 		return
 	}
 
-	http.Redirect(w, r, fmt.Sprintf("/topic?id=%d", topicID), http.StatusSeeOther)
+	/*log.Println("Form values:", r.Form)*/
+
+	content := r.FormValue("content")
+	topicID, _ := strconv.Atoi(r.FormValue("topic_id"))
+	userID := 3
+	//userID := r.Context().Value("userID").(int)
+
+	err2 := topicPostService.AddPost(topicID, content, userID)
+	if err2 != nil {
+		log.Println("❌ AddPost error:", err2)
+		http.Error(w, "❌ error inserting post:"+err2.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	log.Println("✅ Post inserted, redirecting to thread")
+	http.Redirect(w, r, fmt.Sprintf("/thread?id=%d", topicID), http.StatusSeeOther)
 }

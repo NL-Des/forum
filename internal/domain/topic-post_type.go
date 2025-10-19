@@ -1,14 +1,13 @@
 package domain
 
 type Topic struct {
-	ID      int
-	Title   string
-	Content string
-}
-
-type Datas struct {
-	Topics     []Topic
-	IsLoggedIn bool
+	ID        int
+	Title     string
+	Content   string
+	CreatedAt string
+	UpdatedAt string
+	Likes     int
+	Dislikes  int
 }
 
 type Thread struct {
@@ -20,6 +19,9 @@ type Post struct {
 	ID        int
 	Content   string
 	CreatedAt string
+	UpdatedAt string
+	Likes     int
+	Dislikes  int
 }
 
 type TopicPostRepository interface {

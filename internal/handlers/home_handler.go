@@ -2,14 +2,18 @@ package handlers
 
 import (
 	"forum/internal/domain"
-	"html/template"
 	"log"
 	"net/http"
 )
 
-var tpl = template.Must(template.ParseFiles("internal/templates/home.html"))
+type Datas struct {
+	Topics     []domain.Topic
+	IsLoggedIn bool
+}
 
-func Home(w http.ResponseWriter, r *http.Request) {
+/*var tpl = template.Must(template.ParseFiles("internal/templates/home.html"))*/
+
+func HomeHandler(w http.ResponseWriter, r *http.Request) {
 
 	if r.URL.Path != "/" {
 		http.Error(w, "❌ not found", http.StatusNotFound)
@@ -23,6 +27,12 @@ func Home(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	for i := range topics {
+		likes, dislikes, _ := reactionService.GetReactionCounts("topics", int64(topics[i].ID))
+		topics[i].Likes = likes
+		topics[i].Dislikes = dislikes
+	}
+
 	cookie, err := r.Cookie("session_token")
 	var isLoggedIn bool
 
@@ -34,10 +44,10 @@ func Home(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	datas := domain.Datas{
+	datas := Datas{
 		Topics:     topics,
 		IsLoggedIn: isLoggedIn,
 	}
 	log.Printf("Nombre de topics: %d\n", len(topics))
-	renderTemplate(w, "home.html", datas)
+	RenderTemplate(w, "home.html", datas)
 }

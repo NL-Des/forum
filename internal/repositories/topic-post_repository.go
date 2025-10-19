@@ -2,7 +2,6 @@ package repositories
 
 import (
 	"database/sql"
-	"fmt"
 	"forum/internal/domain"
 )
 
@@ -15,9 +14,12 @@ func NewTopicPostRepository(db *sql.DB) domain.TopicPostRepository {
 }
 
 func (r *topicPostRepository) GetAllTopics() ([]domain.Topic, error) {
-	rows, err := r.db.Query("SELECT id, title, content FROM topics ORDER BY id DESC")
+	rows, err := r.db.Query(`
+		SELECT id, title, content, created_at, updated_at 
+		FROM topics 
+		ORDER BY created_at DESC`)
 	if err != nil {
-		fmt.Println("yoyo")
+		/*fmt.Println("yoyo")*/
 		return nil, err
 	}
 	defer rows.Close()
@@ -25,28 +27,42 @@ func (r *topicPostRepository) GetAllTopics() ([]domain.Topic, error) {
 	var topics []domain.Topic
 	for rows.Next() {
 		var t domain.Topic
-		err := rows.Scan(&t.ID, &t.Title, &t.Content)
+		err := rows.Scan(&t.ID, &t.Title, &t.Content, &t.CreatedAt, &t.UpdatedAt)
 		if err != nil {
 			return nil, err
 		}
+		// Likes/Dislikes initialisés à 0
+		t.Likes = 0
+		t.Dislikes = 0
 		topics = append(topics, t)
 	}
 	return topics, nil
 }
 
 func (r *topicPostRepository) InsertTopic(title, content string, userID int) error {
-	_, err := r.db.Exec("INSERT INTO topics (title, content, category_id, user_id) VALUES (?, ?, ?, ?)", title, content, 1, userID)
+	_, err := r.db.Exec(`
+		INSERT INTO topics (title, content, created_at, updated_at, category_id, user_id) 
+		VALUES (?, ?, datetime('now'), datetime('now'), ?, ?)`,
+		title, content, 1, userID)
 	return err
 }
 
 func (r *topicPostRepository) GetTopicByID(id int) (*domain.Topic, error) {
 	var t domain.Topic
-	err := r.db.QueryRow("SELECT id, title, content FROM topics WHERE id = ?", id).Scan(&t.ID, &t.Title, &t.Content)
+	err := r.db.QueryRow(`
+		SELECT id, title, content, created_at, updated_at 
+		FROM topics 
+		WHERE id = ?`, id).
+		Scan(&t.ID, &t.Title, &t.Content, &t.CreatedAt, &t.UpdatedAt)
 	return &t, err
 }
 
 func (r *topicPostRepository) GetPostsByTopicID(topicID int) ([]domain.Post, error) {
-	rows, err := r.db.Query("SELECT id, content, created_at FROM messages WHERE topic_id = ? ORDER BY created_at ASC", topicID)
+	rows, err := r.db.Query(`
+		SELECT id, content, created_at, updated_at 
+		FROM posts 
+		WHERE topic_id = ? 
+		ORDER BY created_at ASC`, topicID)
 	if err != nil {
 		return nil, err
 	}
@@ -55,16 +71,21 @@ func (r *topicPostRepository) GetPostsByTopicID(topicID int) ([]domain.Post, err
 	var posts []domain.Post
 	for rows.Next() {
 		var p domain.Post
-		err := rows.Scan(&p.ID, &p.Content, &p.CreatedAt)
+		err := rows.Scan(&p.ID, &p.Content, &p.CreatedAt, &p.UpdatedAt)
 		if err != nil {
 			return nil, err
 		}
+		p.Likes = 0
+		p.Dislikes = 0
 		posts = append(posts, p)
 	}
 	return posts, nil
 }
 
 func (r *topicPostRepository) InsertPost(topicID int, content string, userID int) error {
-	_, err := r.db.Exec("INSERT INTO messages (content, topic_id, user_id, created_at) VALUES (?, ?, ?, datetime('now'))", content, topicID, userID)
+	_, err := r.db.Exec(`
+		INSERT INTO posts (content, created_at, updated_at, topic_id, user_id) 
+		VALUES (?, datetime('now'), datetime('now'), ?, ?)`,
+		content, topicID, userID)
 	return err
 }

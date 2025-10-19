@@ -10,11 +10,13 @@ import (
 
 var userService domain.UserService
 var topicPostService domain.TopicPostService
+var reactionService domain.ReactionService
 var templates *template.Template
 
-func InitHandlers(us domain.UserService, tps domain.TopicPostService) {
+func InitHandlers(us domain.UserService, tps domain.TopicPostService, rs domain.ReactionService) {
 	userService = us
 	topicPostService = tps
+	reactionService = rs
 
 	// Précharger tous les templates une seule fois
 	var err error
@@ -24,10 +26,11 @@ func InitHandlers(us domain.UserService, tps domain.TopicPostService) {
 	}
 }
 
-func renderTemplate(w http.ResponseWriter, tmpl string, data any) {
+func RenderTemplate(w http.ResponseWriter, tmpl string, data any) {
 	err := templates.ExecuteTemplate(w, tmpl, data)
 	if err != nil {
-		http.Error(w, "❌ internal error: "+err.Error(), http.StatusInternalServerError)
-		fmt.Printf("template error: %v", err)
+		fmt.Printf("template error: %v\n", err)
+		//http.Error(w, "❌ internal error: "+err.Error(), http.StatusInternalServerError)
+		w.Write([]byte("❌ internal error: " + err.Error()))
 	}
 }
