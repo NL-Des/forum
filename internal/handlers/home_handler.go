@@ -27,12 +27,6 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	for i := range topics {
-		likes, dislikes, _ := reactionService.GetReactionCounts("topics", int64(topics[i].ID))
-		topics[i].Likes = likes
-		topics[i].Dislikes = dislikes
-	}
-
 	cookie, err := r.Cookie("session_token")
 	var isLoggedIn bool
 

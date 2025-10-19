@@ -56,18 +56,6 @@ func TopicHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Injection des likes/dislikes pour le topic
-	likes, dislikes, _ := reactionService.GetReactionCounts("topics", int64(thread.Topic.ID))
-	thread.Topic.Likes = likes
-	thread.Topic.Dislikes = dislikes
-
-	// Injection des likes/dislikes pour chaque post
-	for i := range thread.Posts {
-		plikes, pdislikes, _ := reactionService.GetReactionCounts("posts", int64(thread.Posts[i].ID))
-		thread.Posts[i].Likes = plikes
-		thread.Posts[i].Dislikes = pdislikes
-	}
-
 	tmpl := template.Must(template.ParseFiles("internal/templates/topic.html"))
 	tmpl.Execute(w, thread)
 }

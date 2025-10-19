@@ -9,24 +9,12 @@
 	<body>
 		<h2>{{.Topic.Title}}</h2>
 		<p>{{.Topic.Content}}</p>
-		<div>
-			<p>{{.Topic.Likes}}:👍 | {{.Topic.Dislikes}}:👎</p>
-			<a href="/react?target_type=topics&target_id={{.Topic.ID}}&value=1">👍</a>
-			<a href="/react?target_type=topics&target_id={{.Topic.ID}}&value=-1">👎</a>
-			<a href="/remove-reaction?target_type=topics&target_id={{.Topic.ID}}">❌</a>
-		</div>
 
 		<h3>Messages</h3>
 		{{range .Posts}}
 			<div class="post">
 				<p>{{.Content}}</p>
 				<small>{{.CreatedAt}}</small>
-				<div>
-					<p>{{.Likes}}:👍 | {{.Dislikes}}:👎</p>
-					<a href="/react?target_type=posts&target_id={{.ID}}&value=1">👍</a>
-					<a href="/react?target_type=posts&target_id={{.ID}}&value=-1">👎</a>
-					<a href="/remove-reaction?target_type=posts&target_id={{.ID}}">❌</a>
-				</div>
 			</div>
 		{{else}}
 			<p>Pas de message pour ce sujet.</p>
