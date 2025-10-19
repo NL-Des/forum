@@ -11,7 +11,7 @@ import (
 
 /*MARK: Logout
  */
-func Logout(w http.ResponseWriter, r *http.Request) {
+func LogoutHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
 		// Affiche le formulaire logout via home.html
 		renderTemplate(w, "home.html", nil)
@@ -37,7 +37,7 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 
 /*MARK: Authenticate
  */
-func Authenticate(w http.ResponseWriter, r *http.Request) {
+func AuthenticateHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
 		// Affiche le formulaire login via home.html
 		renderTemplate(w, "home.html", nil)
