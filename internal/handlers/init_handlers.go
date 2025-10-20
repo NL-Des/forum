@@ -10,6 +10,7 @@ import (
 
 var userService domain.UserService
 var topicPostService domain.TopicPostService
+var categoryService domain.CategoryService
 var templates *template.Template
 
 func InitHandlers(us domain.UserService, tps domain.TopicPostService) {
