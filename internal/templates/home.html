@@ -51,9 +51,11 @@
 							</div>
 						</div>    
 					{{end}}
+					{{if .IsLoggedIn}}
+          			{{else}}
 					<a href="/register" class="btn">S'inscrire</a>
 				</div>
-
+					{{end}}
 				<!--<form>
 				<button type="submit" class="btn">Logout</button>
 				</form>
