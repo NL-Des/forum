@@ -42,9 +42,9 @@ func (r *topicPostRepository) GetAllTopics() ([]domain.Topic, error) {
 func (r *topicPostRepository) InsertTopic(title, content string, userID int, categories_id []int) error {
 	result, err := r.db.Exec(`
 		INSERT INTO topics (title, content, created_at, updated_at, user_id) 
-		VALUES (?, ?, datetime('now'), datetime('now'), ?, ?)`,
+		VALUES (?, ?, datetime('now'), datetime('now'), ?)`,
 		title, content, userID)
-	if err != nil {
+	if err == nil {
 		topicID, err := result.LastInsertId()
 		if err != nil {
 			return err
@@ -54,6 +54,9 @@ func (r *topicPostRepository) InsertTopic(title, content string, userID int, cat
 				INSERT INTO topic_categories (topic_id, category_id) 
 				VALUES (?, ?)`,
 				topicID, category_id)
+			if err != nil {
+				return err
+			}
 		}
 	}
 	return err

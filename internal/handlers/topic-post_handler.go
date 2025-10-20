@@ -28,7 +28,15 @@ func CreateTopicHandler(w http.ResponseWriter, r *http.Request) {
 	//.Println("User ID :", user.ID)
 	title := r.FormValue("title")
 	content := r.FormValue("content")
-	var categories []int
+	categories_string := r.Form["categories"]
+	var categories_id []int
+	for _, cat := range categories_string {
+		id, err := strconv.Atoi(cat)
+		if err != nil {
+			http.Error(w, "error in id recovery", http.StatusBadRequest)
+		}
+		categories_id = append(categories_id, id)
+	}
 	//log.Println("Reçu :", title, content)
 
 	if title == "" || content == "" {
@@ -36,7 +44,7 @@ func CreateTopicHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = topicPostService.CreateTopic(title, content, int(user.ID), categories)
+	err = topicPostService.CreateTopic(title, content, int(user.ID), categories_id)
 	if err != nil {
 		http.Error(w, "❌ error inserting topic"+err.Error(), http.StatusInternalServerError)
 		return
