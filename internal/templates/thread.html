@@ -8,12 +8,22 @@
 
 	<body>
 		<h2>{{.Topic.Title}}</h2>
-		<p>{{.Topic.Content}}</p>
+		<div class="message">
+  <div class="message-top">
+<p>{{.Topic.Content}}</p>
+<button type="button" class="like">👍</button>
+    <button type="button" class="dislike">👎</button>
+    </div>
+	</div>
 
 		<h3>Messages</h3>
 		{{range .Posts}}
-			<div class="post">
-				<p>{{.Content}}</p>
+			<div class="message">
+    <div class="message-top">
+    <p>{{.Content}}</p>
+    <button type="button" class="like">👍</button>
+    <button type="button" class="dislike">👎</button>
+    </div>
 				<small>Posté le {{.CreatedAt}}</small>
 			</div>
 		{{else}}
