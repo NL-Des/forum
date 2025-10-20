@@ -13,7 +13,7 @@ import (
 func CreateTopicHandler(w http.ResponseWriter, r *http.Request) {
 	cookie, err := r.Cookie("session_token")
 	if err != nil {
-		http.Error(w, "Utilisateur non authentifié", http.StatusUnauthorized)
+		http.Error(w, "unauthentified user", http.StatusUnauthorized)
 		return
 	}
 	if r.Method != http.MethodPost {
@@ -22,12 +22,13 @@ func CreateTopicHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	user, err := userService.Home(cookie.Value)
 	if err != nil {
-		http.Error(w, "Session invalide", http.StatusUnauthorized)
+		http.Error(w, "invalid session", http.StatusUnauthorized)
 		return
 	}
 	//.Println("User ID :", user.ID)
 	title := r.FormValue("title")
 	content := r.FormValue("content")
+	var categories []int
 	//log.Println("Reçu :", title, content)
 
 	if title == "" || content == "" {
@@ -35,7 +36,7 @@ func CreateTopicHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = topicPostService.CreateTopic(title, content, int(user.ID))
+	err = topicPostService.CreateTopic(title, content, int(user.ID), categories)
 	if err != nil {
 		http.Error(w, "❌ error inserting topic"+err.Error(), http.StatusInternalServerError)
 		return
@@ -75,7 +76,7 @@ func TopicHandler(w http.ResponseWriter, r *http.Request) {
 func AddPostHandler(w http.ResponseWriter, r *http.Request) {
 	cookie, err := r.Cookie("session_token")
 	if err != nil {
-		http.Error(w, "Utilisateur non authentifié", http.StatusUnauthorized)
+		http.Error(w, "unauthentified user", http.StatusUnauthorized)
 		return
 	}
 
@@ -96,7 +97,7 @@ func AddPostHandler(w http.ResponseWriter, r *http.Request) {
 	topicID, _ := strconv.Atoi(r.FormValue("topic_id"))
 	user, err := userService.Home(cookie.Value)
 	if err != nil {
-		http.Error(w, "Session invalide", http.StatusUnauthorized)
+		http.Error(w, "invalid session", http.StatusUnauthorized)
 		return
 	}
 	//log.Println("User ID : ", user.ID)

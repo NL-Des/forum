@@ -39,11 +39,23 @@ func (r *topicPostRepository) GetAllTopics() ([]domain.Topic, error) {
 	return topics, nil
 }
 
-func (r *topicPostRepository) InsertTopic(title, content string, UserName int) error {
-	_, err := r.db.Exec(`
-		INSERT INTO topics (title, content, created_at, updated_at, category_id, user_id) 
+func (r *topicPostRepository) InsertTopic(title, content string, userID int, categories_id []int) error {
+	result, err := r.db.Exec(`
+		INSERT INTO topics (title, content, created_at, updated_at, user_id) 
 		VALUES (?, ?, datetime('now'), datetime('now'), ?, ?)`,
-		title, content, 1, UserName)
+		title, content, userID)
+	if err != nil {
+		topicID, err := result.LastInsertId()
+		if err != nil {
+			return err
+		}
+		for _, category_id := range categories_id {
+			_, err = r.db.Exec(`
+				INSERT INTO topic_categories (topic_id, category_id) 
+				VALUES (?, ?)`,
+				topicID, category_id)
+		}
+	}
 	return err
 }
 
