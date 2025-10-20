@@ -1,11 +1,13 @@
 package domain
 
+import "time"
+
 type Topic struct {
 	ID        int
 	Title     string
 	Content   string
-	CreatedAt string
-	UpdatedAt string
+	CreatedAt time.Time
+	UpdatedAt time.Time
 	Likes     int
 	Dislikes  int
 }
@@ -18,8 +20,8 @@ type Thread struct {
 type Post struct {
 	ID        int
 	Content   string
-	CreatedAt string
-	UpdatedAt string
+	CreatedAt time.Time
+	UpdatedAt time.Time
 	Likes     int
 	Dislikes  int
 }
