@@ -6,6 +6,7 @@ type Topic struct {
 	ID        int
 	Title     string
 	Content   string
+	UserName  string
 	CreatedAt time.Time
 	UpdatedAt time.Time
 	Likes     int
@@ -20,6 +21,7 @@ type Thread struct {
 type Post struct {
 	ID        int
 	Content   string
+	UserName  string
 	CreatedAt time.Time
 	UpdatedAt time.Time
 	Likes     int

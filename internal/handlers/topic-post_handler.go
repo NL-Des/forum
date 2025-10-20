@@ -11,11 +11,21 @@ import (
 /*MARK: CreateTopic
  */
 func CreateTopicHandler(w http.ResponseWriter, r *http.Request) {
+	cookie, err := r.Cookie("session_token")
+	if err != nil {
+		http.Error(w, "Utilisateur non authentifié", http.StatusUnauthorized)
+		return
+	}
 	if r.Method != http.MethodPost {
 		http.Error(w, "❌ unauthorized method", http.StatusMethodNotAllowed)
 		return
 	}
-
+	user, err := userService.Home(cookie.Value)
+	if err != nil {
+		http.Error(w, "Session invalide", http.StatusUnauthorized)
+		return
+	}
+	//.Println("User ID :", user.ID)
 	title := r.FormValue("title")
 	content := r.FormValue("content")
 	//log.Println("Reçu :", title, content)
@@ -25,7 +35,7 @@ func CreateTopicHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err := topicPostService.CreateTopic(title, content, 0)
+	err = topicPostService.CreateTopic(title, content, int(user.ID))
 	if err != nil {
 		http.Error(w, "❌ error inserting topic"+err.Error(), http.StatusInternalServerError)
 		return
@@ -63,6 +73,12 @@ func TopicHandler(w http.ResponseWriter, r *http.Request) {
 /*MARK: AddPost
  */
 func AddPostHandler(w http.ResponseWriter, r *http.Request) {
+	cookie, err := r.Cookie("session_token")
+	if err != nil {
+		http.Error(w, "Utilisateur non authentifié", http.StatusUnauthorized)
+		return
+	}
+
 	if r.Method != http.MethodPost {
 		http.Error(w, "❌ unauthorized method", http.StatusMethodNotAllowed)
 		return
@@ -78,10 +94,15 @@ func AddPostHandler(w http.ResponseWriter, r *http.Request) {
 
 	content := r.FormValue("content")
 	topicID, _ := strconv.Atoi(r.FormValue("topic_id"))
-	userID := 3
+	user, err := userService.Home(cookie.Value)
+	if err != nil {
+		http.Error(w, "Session invalide", http.StatusUnauthorized)
+		return
+	}
+	//log.Println("User ID : ", user.ID)
 	//userID := r.Context().Value("userID").(int)
 
-	err2 := topicPostService.AddPost(topicID, content, userID)
+	err2 := topicPostService.AddPost(topicID, content, int(user.ID))
 	if err2 != nil {
 		log.Println("❌ AddPost error:", err2)
 		http.Error(w, "❌ error inserting post:"+err2.Error(), http.StatusInternalServerError)
