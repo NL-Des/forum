@@ -14,6 +14,9 @@
 <button type="button" class="like">👍</button>
     <button type="button" class="dislike">👎</button>
     </div>
+	<div class="message-bottom">
+    <small>{{.Topic.CreatedAt}} - UserName</small>
+    </div>
 	</div>
 
 		<h3>Messages</h3>
@@ -24,7 +27,9 @@
     <button type="button" class="like">👍</button>
     <button type="button" class="dislike">👎</button>
     </div>
-				<small>Posté le {{.CreatedAt}}</small>
+				<div class="message-bottom">
+    <small>{{.CreatedAt}} - UserName</small>
+    </div>
 			</div>
 		{{else}}
 			<p>Pas de message pour ce sujet.</p>
