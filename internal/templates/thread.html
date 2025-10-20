@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8">
+		<title>Sujets</title>
+		<link rel="stylesheet" href="assets/css/topic.css">
+	</head>
+
+	<body>
+		<h2>{{.Topic.Title}}</h2>
+		<p>{{.Topic.Content}}</p>
+
+		<h3>Messages</h3>
+		{{range .Posts}}
+			<div class="post">
+				<p>{{.Content}}</p>
+				<small>{{.CreatedAt}}</small>
+			</div>
+		{{else}}
+			<p>Pas de message pour ce sujet.</p>
+		{{end}}
+
+		<h3>Ajouter un message</h3>
+		<form method="POST" action="/add-post">
+			<input type="hidden" name="topic_id" value="{{.Topic.ID}}">
+			<textarea name="content" required></textarea>
+			<button type="submit">Send</button>
+		</form>
+
+		<a href="/">Retour à l'accueil</a>
+	</body>
+
+</html>

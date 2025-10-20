@@ -29,7 +29,7 @@ func (r *userRepository) Create(user *domain.User) error {
 }
 
 // récupérer un utilisateur de la BdD par son ID:
-func (r *userRepository) GetByID(id int) (*domain.User, error) {
+func (r *userRepository) GetUserByID(id int) (*domain.User, error) {
 	row := r.db.QueryRow("SELECT id, username, email, password FROM users WHERE id = ?", id)
 	user := &domain.User{}
 	err := row.Scan(&user.ID, &user.Username, &user.Email, &user.Password)
@@ -40,7 +40,7 @@ func (r *userRepository) GetByID(id int) (*domain.User, error) {
 }
 
 // récupérer un utilisateur de la BdD par son email
-func (r *userRepository) GetByEmail(email string) (*domain.User, error) {
+func (r *userRepository) GetUserByEmail(email string) (*domain.User, error) {
 	row := r.db.QueryRow("SELECT id, username, email, password FROM users WHERE email = ?", email)
 	user := &domain.User{}
 	err := row.Scan(&user.ID, &user.Username, &user.Email, &user.Password)

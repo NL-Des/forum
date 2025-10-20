@@ -18,43 +18,35 @@ func main() {
 	hash, _ := bcrypt.GenerateFromPassword([]byte(pw), bcrypt.DefaultCost)
 	fmt.Println(string(hash))*/
 
-	mux := http.NewServeMux()
-	db := config.InitDB()
-	defer db.Close()
-	// Charger le fichier .env
+	//1- Charger le fichier .env
 	errEnv := godotenv.Load()
 	if errEnv != nil {
 		log.Fatal("❌ error loading .env file")
 	}
 
-	//Lancement de la BdD:
-	//Injection des dépendances:
-	//cheminement BdD → repositories → services → handlers
+	//2- Lancement de la BdD:
+	db := config.InitDB()
+	defer db.Close()
 
-	userRepo := repositories.NewUserRepository(db)
-	userService := services.NewUserService(userRepo)
-	handlers.InitHandlers(userService)
+	//3- Injection des dépendances:
+	//   cheminement BdD → repositories → services → handlers
+	userRepository := repositories.NewUserRepository(db)
+	topicPostRepository := repositories.NewTopicPostRepository(db)
 
-	//Routage HTTP:
-	//handlers → front
-	mux.HandleFunc("/", handlers.Home)
-	mux.HandleFunc("/login", handlers.Authenticate)
-	mux.HandleFunc("/logout", handlers.Logout)
-	mux.HandleFunc("/register", handlers.RegisterHandler)
-	mux.HandleFunc("/create-topic", handlers.CreateTopicHandler)
-	mux.HandleFunc("/topic", handlers.TopicHandler)
-	mux.HandleFunc("/add-post", handlers.AddPostHandler)
+	userService := services.NewUserService(userRepository)
+	topicPostService := services.NewTopicPostService(topicPostRepository)
 
-	fs := http.FileServer(http.Dir("internal/templates/assets"))
-	mux.Handle("/assets/", http.StripPrefix("/assets/", fs))
+	//4- Récup des Routes HTTP:
+	//   handlers → front
+	router := handlers.Router(userService, topicPostService)
 
-	//Lancement serveur:
+	//5- Lancement serveur:
 	addr := os.Getenv("SERVER_PORT")
 	if addr == "" {
 		addr = ":8086" // valeur par défaut en dev, sinon c'est une variable définie dans .env
 	}
 	log.Printf("Server start → http://localhost%s\n", addr)
-	err := http.ListenAndServe(addr, mux)
+	err := http.ListenAndServe(addr, router)
 	if err != nil {
 		log.Fatal("❌ error trying to run the server: ", err)
 	}
