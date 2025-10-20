@@ -9,6 +9,12 @@
 # docker exec -ti <forum> bash
 # exécute docker dans le terminal, nous évoluons alors dans le container en lui-même.
 
+# Si l'image du container est déjà créé, pour le lancer :
+# docker start <nom du container
+
+# Pour arrêter un container actif.
+# docker stop <nom du container>
+
 # Créé un réseau de containers, où les containers peuvent communiquer.
 networks: 
   web: 
