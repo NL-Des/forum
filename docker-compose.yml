@@ -28,7 +28,7 @@ services:
     restart: unless-stopped # Si l'image plante, elle redémarre automatiquement sauf arrêt manuel.
     init: true # Pas encore bien compris, mais semble gérer les signaux.
     volumes: 
-      - ./forum.db:/app/forum.db
+      - ../forum.db:/app/forum.db
       # ./forum.db C'est la localisation de la BDD au niveau local
       # ---------- /app/forum.db C'est la localisation de la BDD dans le container
     ports:

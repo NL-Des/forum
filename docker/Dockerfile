@@ -1,14 +1,16 @@
-FROM golang:1.21
+FROM golang:1.24.0
 
 WORKDIR /app
 
-COPY go.mod ./
-COPY go.sum ./
+# Importation des dépendances.
+COPY go.mod go.sum ./
 RUN go mod download
 
-COPY . .
+# Copie du code source.
+COPY forum .
 
-RUN go build -o main ./cmd/server
+# Docker compile.
+RUN go build -o forum ./cmd/server
 
-#CMD ["/app/main"]?
+# Lancement de l'éxécutable.
 CMD ["./forum"]
