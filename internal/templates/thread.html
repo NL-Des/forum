@@ -15,7 +15,7 @@
     <button type="button" class="dislike">👎</button>
     </div>
 	<div class="message-bottom">
-    <small>{{.Topic.CreatedAt}} - UserName</small>
+    <small>{{.Topic.CreatedAt}} - {{.Topic.UserName}}</small>
     </div>
 	</div>
 
@@ -28,7 +28,7 @@
     <button type="button" class="dislike">👎</button>
     </div>
 				<div class="message-bottom">
-    <small>{{.CreatedAt}} - UserName</small>
+    <small>{{.CreatedAt}} - {{.UserName}}</small>
     </div>
 			</div>
 		{{else}}
