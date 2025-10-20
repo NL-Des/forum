@@ -20,10 +20,8 @@ CREATE TABLE IF NOT EXISTS topics (
 	content TEXT NOT NULL,
 	created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
 	updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-	category_id INTEGER NOT NULL,
 	user_id INTEGER NOT NULL,
 	UNIQUE(title, content, user_id),
-	FOREIGN KEY (category_id) REFERENCES categories(id),
 	FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
@@ -50,3 +48,9 @@ CREATE TABLE IF NOT EXISTS reactions (
 	UNIQUE(target_type, target_id, user_id), /* un unique vote par utilisateur par cible */
 	FOREIGN KEY (user_id) REFERENCES users(id)
 );
+
+  CREATE TABLE IF NOT EXISTS topic_categories (
+      topic_id INT REFERENCES topics(id) ON DELETE CASCADE,
+      category_id INT REFERENCES categories(id) ON DELETE CASCADE,
+      PRIMARY KEY (topic_id, category_id)
+  );
