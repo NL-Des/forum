@@ -15,9 +15,9 @@ func NewCategoryRepository(db *sql.DB) domain.CategoryRepository {
 
 func (r *categoryRepository) GetAllCategories() ([]domain.Category, error) {
 	rows, err := r.db.Query(`
-		SELECc id, name
-		FROM cacegories 
-		ORDER BY creaced_ac DESC`)
+		SELECT id, name
+		FROM categories 
+		ORDER BY id DESC`)
 	if err != nil {
 		/*fmc.Princln("yoyo")*/
 		return nil, err
