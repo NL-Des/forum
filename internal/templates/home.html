@@ -78,6 +78,13 @@
 				<form method="POST" action="/create-topic">
 					<input type="text" name="title" placeholder="Object of subject" required>
 					<textarea name="content" placeholder="Topic content" required></textarea>
+					<div class="categories">
+    					<h3>catégories</h3>
+    					{{range .Categories}}
+        				<label> <input type="checkbox" name="categories" value="{{.ID}}">{{.Name}}</label>
+    					{{end}}
+					</div>
+
 					<button type="submit" class="btn">Publier</button>
 				</form>
 			</div>
