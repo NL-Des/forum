@@ -43,3 +43,30 @@ func (r *categoryRepository) InsertCategory(category_id int, name string) error 
 		category_id, name)
 	return err
 }
+
+func (r *categoryRepository) GetCategoriesByTopicID(topicID int) ([]domain.Category, error) {
+	rows, err := r.db.Query(`
+        SELECT c.id, c.name
+        FROM categories c
+        JOIN topic_categories tc ON c.id = tc.category_id
+        WHERE tc.topic_id = ?`, topicID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var categories []domain.Category
+	for rows.Next() {
+		var cat domain.Category
+		if err := rows.Scan(&cat.ID, &cat.Name); err != nil {
+			return nil, err
+		}
+		categories = append(categories, cat)
+	}
+
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+
+	return categories, nil
+}

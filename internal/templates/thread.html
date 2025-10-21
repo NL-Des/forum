@@ -10,6 +10,9 @@
 		<h2>{{.Topic.Title}}</h2>
 		<div class="message">
   <div class="message-top">
+	{{range .Categories}}
+	<div>{{.Name}}</div>
+	{{end}}
 <p>{{.Topic.Content}}</p>
 <button type="button" class="like">👍</button>
     <button type="button" class="dislike">👎</button>

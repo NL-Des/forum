@@ -15,8 +15,9 @@ type Topic struct {
 }
 
 type Thread struct {
-	Topic Topic
-	Posts []Post
+	Topic      Topic
+	Posts      []Post
+	Categories []Category
 }
 
 type Post struct {

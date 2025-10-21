@@ -27,6 +27,14 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "❌ error fetching topics", http.StatusInternalServerError)
 		return
 	}
+	for i := range topics {
+		topics[i].Categories, err = categoryService.GetCategoriesByTopicID(topics[i].ID)
+		if err != nil {
+			log.Println("❌ error fetching categories:", err)
+			http.Error(w, "❌ error fetching categories", http.StatusInternalServerError)
+			return
+		}
+	}
 	categories, err := categoryService.GetAllCategories()
 	if err != nil {
 		log.Println("❌ error fetching categories:", err)

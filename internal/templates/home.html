@@ -101,6 +101,10 @@
 			<div class="topic-banner">
 				<a href="/thread?id={{.ID}}">
 					<span class="topic-title">{{.Title}}</span>
+					<span>{{range .Categories}}
+						{{.Name}}
+						{{end}}
+					</span> <br>
 					<span class="topic-content">
 						{{if gt (len .Content) 80}}
 							{{slice .Content 0 80}}...

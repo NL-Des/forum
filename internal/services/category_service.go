@@ -23,3 +23,7 @@ func (s *categoryService) CreateCategory(id int, name string) error {
 	}
 	return s.repo.InsertCategory(id, name)
 }
+
+func (s *categoryService) GetCategoriesByTopicID(topic_id int) ([]domain.Category, error) {
+	return s.repo.GetCategoriesByTopicID(topic_id)
+}
