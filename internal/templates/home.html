@@ -92,32 +92,33 @@
 
 		<h2>Derniers Sujets</h2>
 
-		<div class="topics-header">
-			<span class="header-title">Titre</span>
-			<span class="header-content">Texte</span>
-		</div>
+		{{if .Topics}}
+  		<div class="topics-header">
+    		<span>Titre</span>
+    		<span>Catégorie(s)</span>
+    		<span>Texte</span>
+  		</div>
 
-		{{range .Topics}}
-			<div class="topic-banner">
-				<a href="/thread?id={{.ID}}">
-					<span class="topic-title">{{.Title}}</span>
-					<span>{{range .Categories}}
-						{{.Name}}
-						{{end}}
-					</span> <br>
-					<span class="topic-content">
-						{{if gt (len .Content) 80}}
-							{{slice .Content 0 80}}...
-						{{else}}
-							{{.Content}}
-						{{end}}
-					</span>
-				</a>
-			</div>
+  		{{range .Topics}}
+    	<div class="topic-banner">
+      		<a href="/thread?id={{.ID}}">
+        		<span>{{.Title}}</span>
+        		<span>
+          		{{range .Categories}}{{.Name}} {{end}}
+        		</span>
+        		<span>
+          		{{if gt (len .Content) 80}}
+            		{{slice .Content 0 80}}...
+          		{{else}}
+            		{{.Content}}
+          		{{end}}
+        		</span>
+      		</a>
+    	</div>
+  		{{end}}
 		{{else}}
-			<p>Aucun sujet pour le moment.</p>
-		{{end}}			
-
+  		<p class="no-topics">Aucun sujet pour le moment.</p>
+		{{end}}
 	</body>
 
 	<script>
