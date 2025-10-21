@@ -1,16 +1,9 @@
 package handlers
 
 import (
-	"forum/internal/domain"
 	"log"
 	"net/http"
 )
-
-type Datas struct {
-	Topics     []domain.Topic
-	Categories []domain.Category
-	IsLoggedIn bool
-}
 
 /*var tpl = template.Must(template.ParseFiles("internal/templates/home.html"))*/
 

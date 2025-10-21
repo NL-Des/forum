@@ -14,19 +14,22 @@
 				<img src="assets/img/logoforum.png" alt="Image gauche">
 			</div>
 			<div class="middle-buttons">
-				<form>
-					<select name="filters" id="filters">
-						<option>selection par filtre</option>
-						<option>vos messages</option>
-						<option>liste des 'likes'</option>
-					</select>
-					<select name="categories" id="categories">
-						<option value="">selection par catégorie</option>
-						<option>catégorie 1</option>
-						<option>catégorie 2</option>
-						<option>catégorie 3</option>
-					</select>
-				</form>
+			    <form action="/filter" method="POST">
+			        <select name="filters" id="filters">
+			            <option value="">selection par filtre</option>
+			            <option value="messages">vos messages</option>
+			            <option value="likes">liste des 'likes'</option>
+			        </select>
+				
+			        <select name="categories" id="categories">
+			            <option value="">selection par catégorie</option>
+			            <option value="cat1">catégorie 1</option>
+			            <option value="cat2">catégorie 2</option>
+			            <option value="cat3">catégorie 3</option>
+			        </select>
+				
+			        <button type="submit">Filtrer</button>
+			    </form>
 			</div>
 
 			<div class="right-buttons">

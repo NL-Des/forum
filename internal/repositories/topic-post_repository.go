@@ -118,3 +118,30 @@ func (r *topicPostRepository) InsertPost(topicID int, content string, UserName i
 		content, topicID, UserName)
 	return err
 }
+
+func (r *topicPostRepository) GetTopicsByUserId(UserId int) ([]domain.Topic, error) {
+	rows, err := r.db.Query(`
+		SELECT id, title, content, created_at, updated_at, user_id 
+		FROM topics 
+		WHERE user_id = ? 
+		ORDER BY created_at DESC`, UserId)
+	if err != nil {
+		/*fmt.Println("yoyo")*/
+		return nil, err
+	}
+	defer rows.Close()
+
+	var topics []domain.Topic
+	for rows.Next() {
+		var t domain.Topic
+		err := rows.Scan(&t.ID, &t.Title, &t.Content, &t.CreatedAt, &t.UpdatedAt, &t.UserName)
+		if err != nil {
+			return nil, err
+		}
+		// Likes/Dislikes initialisés à 0
+		t.Likes = 0
+		t.Dislikes = 0
+		topics = append(topics, t)
+	}
+	return topics, nil
+}

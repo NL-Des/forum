@@ -49,3 +49,11 @@ func (s *topicPostService) AddPost(topicID int, content string, userID int) erro
 	}
 	return s.repo.InsertPost(topicID, content, userID)
 }
+
+func (s *topicPostService) FilterTopic(UserId int) ([]domain.Topic, error) {
+	topics, err := s.repo.GetTopicsByUserId(UserId)
+	if err != nil {
+		return nil, err
+	}
+	return topics, nil
+}
