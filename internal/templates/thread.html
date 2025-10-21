@@ -34,14 +34,14 @@
 		{{else}}
 			<p>Pas de message pour ce sujet.</p>
 		{{end}}
-
+		{{if .IsLoggedIn}}
 		<h3>Ajouter un message</h3>
 		<form method="POST" action="/add-post">
 			<input type="hidden" name="topic_id" value="{{.Topic.ID}}">
 			<textarea name="content" required></textarea>
 			<button type="submit">Send</button>
 		</form>
-
+		{{end}}
 		<a href="/">Retour à l'accueil</a>
 	</body>
 

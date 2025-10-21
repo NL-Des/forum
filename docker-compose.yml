@@ -1,19 +1,15 @@
-# Pour lancer le docker
+# Pour construire l'image du docker :
 # docker compose up -d --build --remove-orphans --force-recreate <forum>
 #-Lance le docker compose dans le document.
 #------------------- lance en detach mod, en arrière plan, évite d'immobiliser le terminal mobilisé.
 #---------------------- build l'image.
 #----------------------------- supprime les dockers qui tournent déjà.
-# Attention cela relance tous les services du docker compose présent dans le dossier.
 
-# docker exec -ti <forum> bash
-# exécute docker dans le terminal, nous évoluons alors dans le container en lui-même.
-
-# Si l'image du container est déjà créé, pour le lancer :
-# docker start <nom du container
+# Si l'image du container est déjà créée, pour lancer le container :
+# docker start <nom de l'image>
 
 # Pour arrêter un container actif.
-# docker stop <nom du container>
+# docker stop <nom de l'image>
 
 # Créé un réseau de containers, où les containers peuvent communiquer.
 networks: 
