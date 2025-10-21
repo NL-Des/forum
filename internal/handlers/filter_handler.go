@@ -38,14 +38,14 @@ func FilterTopicByUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	filter := r.FormValue("filters")
-	//category := r.FormValue("categories")
+	FormCategory := r.FormValue("categories")
 	user, err := userService.Home(cookie.Value)
 	if err != nil {
 		http.Error(w, "invalid session", http.StatusUnauthorized)
 		return
 	}
 	fmt.Println(filter)
-	if filter == "messages" {
+	if filter == "messages" && FormCategory == "" {
 		topics, err = topicPostService.FilterTopic(int(user.ID))
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -53,6 +53,16 @@ func FilterTopicByUser(w http.ResponseWriter, r *http.Request) {
 		if topics == nil {
 			fmt.Println("utilisateur sans topics")
 		}
+		for i := range topics {
+			categories, err = categoryService.GetCategoriesByTopicID(topics[i].ID)
+			if err != nil {
+				log.Println("❌ error fetching categories:", err)
+				http.Error(w, "❌ error fetching categories", http.StatusInternalServerError)
+				return
+			}
+		}
+	} else if filter == "messages" && FormCategory != "" {
+
 	} else {
 		http.Redirect(w, r, "/", http.StatusSeeOther)
 	}
@@ -70,12 +80,12 @@ func FilterTopicByUser(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
-	categories, err = categoryService.GetAllCategories()
+	/*categories, err = categoryService.GetAllCategories()
 	if err != nil {
 		log.Println("❌ error fetching categories:", err)
 		http.Error(w, "❌ error fetching categories", http.StatusInternalServerError)
 		return
-	}
+	}*/
 
 	datas := Datas{
 		Topics:     topics,
