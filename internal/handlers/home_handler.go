@@ -8,6 +8,7 @@ import (
 
 type Datas struct {
 	Topics     []domain.Topic
+	Categories []domain.Category
 	IsLoggedIn bool
 }
 
@@ -26,6 +27,20 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "❌ error fetching topics", http.StatusInternalServerError)
 		return
 	}
+	for i := range topics {
+		topics[i].Categories, err = categoryService.GetCategoriesByTopicID(topics[i].ID)
+		if err != nil {
+			log.Println("❌ error fetching categories:", err)
+			http.Error(w, "❌ error fetching categories", http.StatusInternalServerError)
+			return
+		}
+	}
+	categories, err := categoryService.GetAllCategories()
+	if err != nil {
+		log.Println("❌ error fetching categories:", err)
+		http.Error(w, "❌ error fetching categories", http.StatusInternalServerError)
+		return
+	}
 
 	cookie, err := r.Cookie("session_token")
 	var isLoggedIn bool
@@ -41,6 +56,7 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	datas := Datas{
 		Topics:     topics,
 		IsLoggedIn: isLoggedIn,
+		Categories: categories,
 	}
 	log.Printf("Nombre de topics: %d\n", len(topics))
 	RenderTemplate(w, "home.html", datas)

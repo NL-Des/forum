@@ -343,3 +343,17 @@ h2 {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+
+    .categories {
+  display: flex;
+  flex-direction: column; /* chaque label sur une ligne */
+  align-items: flex-start; /* tout aligné à gauche */
+  gap: 5px; /* espace entre les labels */
+}
+
+.categories label {
+  display: flex;
+  align-items: center; /* aligne la checkbox et le texte verticalement */
+  gap: 5px; /* espace entre la checkbox et le mot */
+}

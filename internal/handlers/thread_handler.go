@@ -8,8 +8,9 @@ import (
 )
 
 type ThreadData struct {
-	Topic domain.Topic
-	Posts []domain.Post
+	Topic      domain.Topic
+	Posts      []domain.Post
+	Categories []domain.Category
 }
 
 func ThreadHandler(w http.ResponseWriter, r *http.Request) {
@@ -29,6 +30,12 @@ func ThreadHandler(w http.ResponseWriter, r *http.Request) {
 	thread, err := topicPostService.GetThreadByID(id)
 	if err != nil {
 		http.Error(w, "❌ topic not found", http.StatusNotFound)
+		return
+	}
+
+	thread.Categories, err = categoryService.GetCategoriesByTopicID(id)
+	if err != nil {
+		http.Error(w, "❌ categories not found", http.StatusNotFound)
 		return
 	}
 

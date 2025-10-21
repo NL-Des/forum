@@ -17,13 +17,13 @@ func (s *topicPostService) GetAllTopics() ([]domain.Topic, error) {
 	return s.repo.GetAllTopics()
 }
 
-func (s *topicPostService) CreateTopic(title, content string, userID int) error {
+func (s *topicPostService) CreateTopic(title, content string, userID int, categories_id []int) error {
 
 	if title == "" {
 		return fmt.Errorf("❌ the 'Title' field can't be empty")
 	}
 	// limiter la taille du contenu ??
-	return s.repo.InsertTopic(title, content, userID)
+	return s.repo.InsertTopic(title, content, userID, categories_id)
 }
 
 func (s *topicPostService) GetThreadByID(id int) (*domain.Thread, error) {
