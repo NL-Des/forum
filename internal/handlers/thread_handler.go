@@ -11,6 +11,7 @@ type ThreadData struct {
 	Topic      domain.Topic
 	Posts      []domain.Post
 	Categories []domain.Category
+	IsLoggedIn bool
 }
 
 func ThreadHandler(w http.ResponseWriter, r *http.Request) {
@@ -39,6 +40,17 @@ func ThreadHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	cookie, err := r.Cookie("session_token")
+	var isLoggedIn bool
+
+	if err == nil {
+		// Vérifie si le token correspond à un utilisateur connecté
+		user, _ := userService.Home(cookie.Value)
+		if user != nil {
+			isLoggedIn = true
+		}
+	}
+	thread.IsLoggedIn = isLoggedIn
 	// Rendu du template thread.html
 	tmpl := template.Must(template.ParseFiles("internal/templates/thread.html"))
 	err = tmpl.Execute(w, thread)

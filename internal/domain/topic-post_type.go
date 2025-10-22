@@ -18,6 +18,7 @@ type Thread struct {
 	Topic      Topic
 	Posts      []Post
 	Categories []Category
+	IsLoggedIn bool
 }
 
 type Post struct {

@@ -9,42 +9,45 @@
 	<body>
 		<h2>{{.Topic.Title}}</h2>
 		<div class="message">
-  <div class="message-top">
-	{{range .Categories}}
-	<div>{{.Name}}</div>
-	{{end}}
-<p>{{.Topic.Content}}</p>
-<button type="button" class="like">👍</button>
-    <button type="button" class="dislike">👎</button>
-    </div>
-	<div class="message-bottom">
-    <small>{{.Topic.CreatedAt}} - {{.Topic.UserName}}</small>
-    </div>
-	</div>
+  			<div class="message-top">
+				<p>{{.Topic.Content}}</p>
+				<button type="button" class="like">👍</button>
+    			<button type="button" class="dislike">👎</button>
+    		</div>
+			<div class="categories">
+				{{range .Categories}}
+				<div>{{.Name}}</div>
+				{{end}}
+			</div>
+			<div class="message-bottom">
+    			<small>{{.Topic.CreatedAt}} - {{.Topic.UserName}}</small>
+    		</div>
+		</div>
 
 		<h3>Messages</h3>
 		{{range .Posts}}
-			<div class="message">
-    <div class="message-top">
-    <p>{{.Content}}</p>
-    <button type="button" class="like">👍</button>
-    <button type="button" class="dislike">👎</button>
-    </div>
-				<div class="message-bottom">
-    <small>{{.CreatedAt}} - {{.UserName}}</small>
-    </div>
+		<div class="message">
+    		<div class="message-top">
+    			<p>{{.Content}}</p>
+    			<button type="button" class="like">👍</button>
+    			<button type="button" class="dislike">👎</button>
+    		</div>
+			<div class="message-bottom">
+    			<small>{{.CreatedAt}} - {{.UserName}}</small>
+    		</div>
 			</div>
 		{{else}}
 			<p>Pas de message pour ce sujet.</p>
 		{{end}}
-
+		
+		{{if .IsLoggedIn}}
 		<h3>Ajouter un message</h3>
 		<form method="POST" action="/add-post">
 			<input type="hidden" name="topic_id" value="{{.Topic.ID}}">
 			<textarea name="content" required></textarea>
 			<button type="submit">Send</button>
 		</form>
-
+		{{end}}
 		<a href="/">Retour à l'accueil</a>
 	</body>
 

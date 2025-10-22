@@ -7,14 +7,18 @@ body {
   color: #333;
 }
 
-/* Titre du sujet */
+/**********************************************************************/
+/*MARK: TITRE
+/**********************************************************************/
 h2 {
   text-align: center;
   margin-bottom: 20px;
   font-size: 2em;
 }
 
-/* Contenu du sujet */
+/**********************************************************************/
+/*MARK: CONTENU
+/**********************************************************************/
 p {
   max-width: 800px;
   margin: 0 auto 20px auto;
@@ -37,25 +41,15 @@ p {
   justify-content: center;
 }
 
-/* Messages */
+/**********************************************************************/
+/*MARK: MESSAGE
+/**********************************************************************/
 h3 {
   max-width: 800px;
   margin: 30px auto 10px auto;
   font-size: 1.5em;
 }
 
-.post {
-  max-width: 800px;
-  background-color: rgba(255,255,255,0.95);
-  padding: 15px 20px;
-  margin: 10px auto;
-  border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  transition: transform 0.2s, box-shadow 0.2s;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
 .message {
   max-width: 800px;
   background-color: rgba(255,255,255,0.95);
@@ -83,7 +77,33 @@ h3 {
   gap: 10px;
 }
 
-/* Formulaire ajouter un message */
+/**********************************************************************/
+/*MARK: CATEGORIES DU MESSAGE
+/**********************************************************************/
+
+.categories {
+  display: flex;     
+  flex-wrap: wrap; 
+  gap: 5px;      
+  justify-content: flex-start; 
+  align-items: flex-start; 
+  padding: 0; 
+  margin: 0;             
+}
+
+.categories div {
+  background-color: #f0f0f0;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #333;
+  margin: 0;               
+}
+
+/**********************************************************************/
+/*MARK: FORMULAIRE
+/**********************************************************************/
 form {
   max-width: 800px;
   margin: 20px auto;
@@ -118,7 +138,9 @@ form button:hover {
   background-color: #0056b3;
 }
 
-/* Lien retour */
+/**********************************************************************/
+/*MARK: BOUTON RETOUR
+/**********************************************************************/
 a {
   display: block;
   text-align: center;
