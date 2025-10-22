@@ -5,8 +5,8 @@ import (
 	"net/http"
 )
 
-func Router(userService domain.UserService, topicPostService domain.TopicPostService, categoryService domain.CategoryService, reactionService domain.ReactionService) http.Handler {
-	InitHandlers(userService, topicPostService, categoryService, reactionService)
+func Router(userService domain.UserService, topicPostService domain.TopicPostService, categoryService domain.CategoryService, reactionService domain.ReactionService, filterService domain.FilterService) http.Handler {
+	InitHandlers(userService, topicPostService, categoryService, reactionService, filterService)
 
 	mux := http.NewServeMux()
 

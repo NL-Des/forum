@@ -34,15 +34,17 @@ func main() {
 	topicPostRepository := repositories.NewTopicPostRepository(db)
 	categoryRepository := repositories.NewCategoryRepository(db)
 	reactionRepository := repositories.NewReactionRepository(db)
+	filterRepository := repositories.NewFilterRepository(db)
 
 	userService := services.NewUserService(userRepository)
 	topicPostService := services.NewTopicPostService(topicPostRepository)
 	categoryService := services.NewCategoryService(categoryRepository)
 	reactionService := services.NewReactionService(reactionRepository)
+	filterService := services.NewFilterService(filterRepository)
 
 	//4- Récup des Routes HTTP:
 	//   handlers → front
-	router := handlers.Router(userService, topicPostService, categoryService, reactionService)
+	router := handlers.Router(userService, topicPostService, categoryService, reactionService, filterService)
 
 	//5- Lancement serveur:
 	addr := os.Getenv("SERVER_PORT")

@@ -32,11 +32,7 @@ func FilterTopicByUser(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Println(err)
 	} else {
-		user, err = userService.Home(cookie.Value)
-		if err != nil {
-			http.Error(w, "invalid session", http.StatusUnauthorized)
-			return
-		}
+		user, _ = userService.Home(cookie.Value)
 		if user != nil {
 			isLoggedIn = true
 		}
@@ -49,7 +45,7 @@ func FilterTopicByUser(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(filter)
 
 	if filter == "messages" && FormCategory == "" {
-		topics, err = topicPostService.FilterTopic(int(user.ID))
+		topics, err = filterService.FilterTopic(int(user.ID))
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
@@ -65,7 +61,7 @@ func FilterTopicByUser(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 	} else if filter == "" && FormCategory != "" {
-		topics, err = topicPostService.FilterByCategorie(FormCategory)
+		topics, err = filterService.FilterByCategorie(FormCategory)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
@@ -79,7 +75,7 @@ func FilterTopicByUser(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	} else if filter == "messages" && FormCategory != "" {
-		topics, err = topicPostService.FilterByCategorieAndUserId(FormCategory, int(user.ID))
+		topics, err = filterService.FilterByCategorieAndUserId(FormCategory, int(user.ID))
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
