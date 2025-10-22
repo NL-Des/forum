@@ -15,29 +15,41 @@ type ThreadData struct {
 }
 
 func ThreadHandler(w http.ResponseWriter, r *http.Request) {
-	idStr := r.URL.Query().Get("id")
-	if idStr == "" {
-		http.Error(w, "❌ missing ID", http.StatusBadRequest)
-		return
-	}
+    idStr := r.URL.Query().Get("id")
+    if idStr == "" {
+        http.Error(w, "❌ missing ID", http.StatusBadRequest)
+        return
+    }
 
-	id, err := strconv.Atoi(idStr)
-	if err != nil {
-		http.Error(w, "❌ invalid ID", http.StatusBadRequest)
-		return
-	}
+    id, err := strconv.Atoi(idStr)
+    if err != nil {
+        http.Error(w, "❌ invalid ID", http.StatusBadRequest)
+        return
+    }
 
-	// Récupération du thread (topic + posts)
-	thread, err := topicPostService.GetThreadByID(id)
-	if err != nil {
-		http.Error(w, "❌ topic not found", http.StatusNotFound)
-		return
-	}
+    // Récupération du thread (topic + posts)
+    thread, err := topicPostService.GetThreadByID(id)
+    if err != nil {
+        http.Error(w, "❌ topic not found", http.StatusNotFound)
+        return
+    }
 
 	thread.Categories, err = categoryService.GetCategoriesByTopicID(id)
 	if err != nil {
 		http.Error(w, "❌ categories not found", http.StatusNotFound)
 		return
+	}
+
+	// Injection des likes/dislikes pour le topic
+	likes, dislikes, _ := reactionService.GetReactionCounts("topics", int64(thread.Topic.ID))
+	thread.Topic.Likes = likes
+	thread.Topic.Dislikes = dislikes
+
+	// Injection des likes/dislikes pour chaque post
+	for i := range thread.Posts {
+		plikes, pdislikes, _ := reactionService.GetReactionCounts("posts", int64(thread.Posts[i].ID))
+		thread.Posts[i].Likes = plikes
+		thread.Posts[i].Dislikes = pdislikes
 	}
 
 	cookie, err := r.Cookie("session_token")

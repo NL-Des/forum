@@ -36,6 +36,9 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, "❌ error fetching categories", http.StatusInternalServerError)
 			return
 		}
+		likes, dislikes, _ := reactionService.GetReactionCounts("topics", int64(topics[i].ID))
+		topics[i].Likes = likes
+		topics[i].Dislikes = dislikes
 	}
 	categories, err := categoryService.GetAllCategories()
 	if err != nil {

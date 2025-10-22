@@ -11,8 +11,14 @@
 		<div class="message">
   			<div class="message-top">
 				<p>{{.Topic.Content}}</p>
-				<button type="button" class="like">👍</button>
-    			<button type="button" class="dislike">👎</button>
+				<!--<button type="button" class="like">👍</button>
+    			<button type="button" class="dislike">👎</button>-->
+				<div>
+					<p><span class="like">{{.Topic.Likes}}:👍</span> | <span class="dislike">{{.Topic.Dislikes}}:👎</span></p>
+					<a href="/react?target_type=topics&target_id={{.Topic.ID}}&value=1">👍</a>
+					<a href="/react?target_type=topics&target_id={{.Topic.ID}}&value=-1">👎</a>
+					<a href="/remove-reaction?target_type=topics&target_id={{.Topic.ID}}">❌</a>
+				</div>
     		</div>
 			<div class="categories">
 				{{range .Categories}}
@@ -29,8 +35,14 @@
 		<div class="message">
     		<div class="message-top">
     			<p>{{.Content}}</p>
-    			<button type="button" class="like">👍</button>
-    			<button type="button" class="dislike">👎</button>
+    			<!--<button type="button" class="like">👍</button>
+    			<button type="button" class="dislike">👎</button>-->
+				<div>
+					<p><span class="like">{{.Likes}}:👍</span> | <span class="dislike">{{.Dislikes}}:👎</span></p>
+					<a href="/react?target_type=posts&target_id={{.ID}}&value=1">👍</a>
+					<a href="/react?target_type=posts&target_id={{.ID}}&value=-1">👎</a>
+					<a href="/remove-reaction?target_type=posts&target_id={{.ID}}">❌</a>
+				</div>
     		</div>
 			<div class="message-bottom">
     			<small>{{.CreatedAt}} - {{.UserName}}</small>
@@ -39,7 +51,6 @@
 		{{else}}
 			<p>Pas de message pour ce sujet.</p>
 		{{end}}
-		
 		{{if .IsLoggedIn}}
 		<h3>Ajouter un message</h3>
 		<form method="POST" action="/add-post">
