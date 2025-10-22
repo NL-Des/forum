@@ -37,6 +37,9 @@ type TopicPostRepository interface {
 	GetTopicByID(id int) (*Topic, error)
 	GetPostsByTopicID(topicID int) ([]Post, error)
 	InsertPost(topicID int, content string, userID int) error
+	GetTopicsByUserId(UserId int) ([]Topic, error)
+	GetTopicsByCategories(CategorieName string) ([]Topic, error)
+	GetTopicsByCategoriesAndUserId(CategorieName string, UserId int) ([]Topic, error)
 }
 
 type TopicPostService interface {
@@ -44,4 +47,7 @@ type TopicPostService interface {
 	CreateTopic(title, content string, userID int, categories_id []int) error
 	GetThreadByID(id int) (*Thread, error)
 	AddPost(topicID int, content string, userID int) error
+	FilterTopic(UserId int) ([]Topic, error)
+	FilterByCategorie(CategorieName string) ([]Topic, error)
+	FilterByCategorieAndUserId(CategorieName string, UserId int) ([]Topic, error)
 }

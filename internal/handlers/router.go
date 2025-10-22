@@ -19,6 +19,7 @@ func Router(userService domain.UserService, topicPostService domain.TopicPostSer
 	mux.HandleFunc("/create-topic", CreateTopicHandler)
 	mux.HandleFunc("/topic", TopicHandler)
 	mux.HandleFunc("/add-post", AddPostHandler)
+	mux.HandleFunc("/filter", FilterTopicByUser)
 
 	fs := http.FileServer(http.Dir("internal/templates/assets"))
 	mux.Handle("/assets/", http.StripPrefix("/assets/", fs))
