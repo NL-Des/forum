@@ -21,11 +21,12 @@
 						<option>liste des 'likes'</option>
 					</select>
 					<select name="categories" id="categories">
-						<option value="">selection par catégorie</option>
-						<option>catégorie 1</option>
-						<option>catégorie 2</option>
-						<option>catégorie 3</option>
+  						<option value="">Sélection par catégorie</option>
+  						{{range .Categories}}
+    						<option value="{{.ID}}">{{.Name}}</option>
+  						{{end}}
 					</select>
+
 				</form>
 			</div>
 
@@ -75,54 +76,64 @@
 
 
 		{{if .IsLoggedIn}} 
-			<div class="mainpart">
-				<button id="new-subject-btn" class="btn">+ nouveau sujet</button>
-			</div>
+  		<div class="mainpart">
+    		<button id="new-subject-btn" class="btn">+ Nouveau sujet</button>
+  		</div>
 
-			<div id="subject-form" class="form-container" style="display: none;">
-				<form method="POST" action="/create-topic">
-					<input type="text" name="title" placeholder="Object of subject" required>
-					<textarea name="content" placeholder="Topic content" required></textarea>
-					<div class="categories">
-    					<h3>catégories</h3>
-    					{{range .Categories}}
-        				<label> <input type="checkbox" name="categories" value="{{.ID}}">{{.Name}}</label>
-    					{{end}}
-					</div>
+  		<div id="subject-form" class="form-container" style="display: none;">
+    		<form method="POST" action="/create-topic">
+      		<input type="text" name="title" placeholder="Objet du sujet" required>
+      		<textarea name="content" placeholder="Contenu du sujet" required></textarea>
 
-					<button type="submit" class="btn">Publier</button>
-				</form>
-			</div>
+      		<div class="categories">
+        		<h3>Catégories</h3>
+        		<div class="checkboxes">
+          		{{range .Categories}}
+            		<label class="category-label">
+              		<input type="checkbox" name="categories" value="{{.ID}}">
+              		<span class="category-name">{{.Name}}</span>
+            		</label>
+          		{{end}}
+        		</div>
+      		</div>
+
+      		<button type="submit" class="btn">Publier</button>
+    		</form>
+  		</div>
 		{{end}}
 
 
 		<h2>Derniers Sujets</h2>
 
 		<div class="topics-header">
-			<span class="header-title">Titre</span>
-			<span class="header-content">Texte</span>
+  			<span>Titre</span>
+  			<span>Catégorie(s)</span>
+  			<span>Texte</span>
 		</div>
 
-		{{range .Topics}}
-			<div class="topic-banner">
-				<a href="/thread?id={{.ID}}">
-					<span class="topic-title">{{.Title}}</span>
-					<span>{{range .Categories}}
-						{{.Name}}
-						{{end}}
-					</span> <br>
-					<span class="topic-content">
-						{{if gt (len .Content) 80}}
-							{{slice .Content 0 80}}...
-						{{else}}
-							{{.Content}}
-						{{end}}
-					</span>
-				</a>
-			</div>
+		{{if .Topics}}
+  		{{range .Topics}}
+    	<div class="topic-banner">
+      		<a href="/thread?id={{.ID}}">
+        		<span>{{.Title}}</span>
+        <div class="topic-categories">
+          {{range .Categories}}
+            <span class="category-item">{{.Name}}</span>
+          {{end}}
+        </div>
+        <span>
+          {{if gt (len .Content) 80}}
+            {{slice .Content 0 80}}...
+          {{else}}
+            {{.Content}}
+          {{end}}
+        </span>
+      	</a>
+    	</div>
+  		{{end}}
 		{{else}}
-			<p>Aucun sujet pour le moment.</p>
-		{{end}}			
+  		<p class="no-topics">Aucun sujet pour le moment.</p>
+		{{end}}
 
 	</body>
 
