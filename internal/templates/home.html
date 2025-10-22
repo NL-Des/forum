@@ -39,17 +39,21 @@
 						<!--<button href="/logout" type="submit" class="btn">Logout</button>-->
 					{{else}}
 						<!-- Popup de login -->
-						<input type="checkbox" id="login-popup" hidden>
+          				<input type="checkbox" id="login-popup" hidden {{with .Error}}checked{{end}}>
 						<label for="login-popup" class="btn">Se connecter</label>        
 						<div class="popup">
 							<div class="popup-content">
 								<label for="login-popup" class="close">&times;</label>
 								<h2>Connection</h2>
 								<form action="/login" method="POST">
-									<input type="email" name="email" placeholder="email" required>
-									<input type="password" name="password" placeholder="password" required>
-									<button type="submit">Se connecter</button>
-								</form>
+                					{{with .Error}}
+                  					<p style="color:red; font-weight:bold;">{{.}}</p>
+                					{{end}}
+                					<input type="email" name="email" placeholder="email" value="{{.Email}}" required>
+                					<input type="password" name="password" placeholder="password" required>
+                  
+                				<button type="submit">Se connecter</button>
+              				</form>
 							</div>
 						</div>    
 					{{end}}
@@ -69,6 +73,7 @@
 					</form>-->
 			</div>
 		</div>
+
 
 		{{if .IsLoggedIn}} 
   		<div class="mainpart">
