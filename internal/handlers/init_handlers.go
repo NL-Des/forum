@@ -11,12 +11,14 @@ import (
 var userService domain.UserService
 var topicPostService domain.TopicPostService
 var categoryService domain.CategoryService
+var reactionService domain.ReactionService
 var templates *template.Template
 
-func InitHandlers(us domain.UserService, tps domain.TopicPostService, cs domain.CategoryService) {
+func InitHandlers(us domain.UserService, tps domain.TopicPostService, cs domain.CategoryService, rs domain.ReactionService) {
 	userService = us
 	topicPostService = tps
 	categoryService = cs
+	reactionService = rs
 
 	// Précharger tous les templates une seule fois
 	var err error
