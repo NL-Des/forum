@@ -5,6 +5,7 @@ type User struct {
 	Username string
 	Password string // (doit être "hashé")
 	Email    string
+	Error    string
 }
 
 type UserRepository interface {
