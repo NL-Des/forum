@@ -35,3 +35,6 @@ func (s *filterService) FilterByCategorieAndUserId(CategorieName string, UserId 
 	}
 	return topics, nil
 }
+func (s *filterService) GetLikedTopics(userID int64) ([]domain.Topic, error) {
+	return s.repo.GetLikedTopicsByUser(userID)
+}

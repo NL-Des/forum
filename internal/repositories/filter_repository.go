@@ -101,3 +101,26 @@ func (r *filterRepository) GetTopicsByCategoriesAndUserId(CategorieName string, 
 	return topics, nil
 
 }
+
+func (r *filterRepository) GetLikedTopicsByUser(userID int64) ([]domain.Topic, error) {
+	rows, err := r.db.Query(`
+		SELECT t.id, t.title, t.content, t.created_at, t.updated_at
+		FROM topics t
+		JOIN reactions r ON r.target_type='topics' AND r.target_id=t.id
+		WHERE r.user_id=? AND r.value=1
+	`, userID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var topics []domain.Topic
+	for rows.Next() {
+		var t domain.Topic
+		if err := rows.Scan(&t.ID, &t.Title, &t.Content, &t.CreatedAt, &t.UpdatedAt); err != nil {
+			return nil, err
+		}
+		topics = append(topics, t)
+	}
+	return topics, nil
+}

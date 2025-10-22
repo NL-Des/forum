@@ -88,6 +88,23 @@ func FilterTopicByUser(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, "❌ error fetching categories", http.StatusInternalServerError)
 			return
 		}
+	} else if filter == "likes" && FormCategory == "" {
+		topics, err = filterService.GetLikedTopics(user.ID)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		if topics == nil {
+			fmt.Println("utilisateur sans topics")
+		}
+		for i := range topics {
+			categories, err = categoryService.GetCategoriesByTopicID(topics[i].ID)
+			if err != nil {
+				log.Println("❌ error fetching categories:", err)
+				http.Error(w, "❌ error fetching categories", http.StatusInternalServerError)
+				return
+			}
+		}
 	} else {
 		http.Redirect(w, r, "/", http.StatusSeeOther)
 	}
