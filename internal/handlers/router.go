@@ -5,8 +5,8 @@ import (
 	"net/http"
 )
 
-func Router(userService domain.UserService, topicPostService domain.TopicPostService, reactionService domain.ReactionService) http.Handler {
-	InitHandlers(userService, topicPostService, reactionService)
+func Router(userService domain.UserService, topicPostService domain.TopicPostService, categoryService domain.CategoryService, reactionService domain.ReactionService) http.Handler {
+	InitHandlers(userService, topicPostService, categoryService, reactionService)
 
 	mux := http.NewServeMux()
 
@@ -21,6 +21,7 @@ func Router(userService domain.UserService, topicPostService domain.TopicPostSer
 	mux.HandleFunc("/add-post", AddPostHandler)
 	mux.HandleFunc("/react", ReactHandler)
 	mux.HandleFunc("/remove-reaction", RemoveReactionHandler)
+	mux.HandleFunc("/filter", FilterTopicByUser)
 
 	fs := http.FileServer(http.Dir("internal/templates/assets"))
 	mux.Handle("/assets/", http.StripPrefix("/assets/", fs))

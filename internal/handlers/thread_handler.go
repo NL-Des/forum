@@ -8,8 +8,10 @@ import (
 )
 
 type ThreadData struct {
-	Topic domain.Topic
-	Posts []domain.Post
+	Topic      domain.Topic
+	Posts      []domain.Post
+	Categories []domain.Category
+	IsLoggedIn bool
 }
 
 func ThreadHandler(w http.ResponseWriter, r *http.Request) {
@@ -32,6 +34,12 @@ func ThreadHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	thread.Categories, err = categoryService.GetCategoriesByTopicID(id)
+	if err != nil {
+		http.Error(w, "❌ categories not found", http.StatusNotFound)
+		return
+	}
+
 	// Injection des likes/dislikes pour le topic
 	likes, dislikes, _ := reactionService.GetReactionCounts("topics", int64(thread.Topic.ID))
 	thread.Topic.Likes = likes
@@ -44,6 +52,17 @@ func ThreadHandler(w http.ResponseWriter, r *http.Request) {
 		thread.Posts[i].Dislikes = pdislikes
 	}
 
+	cookie, err := r.Cookie("session_token")
+	var isLoggedIn bool
+
+	if err == nil {
+		// Vérifie si le token correspond à un utilisateur connecté
+		user, _ := userService.Home(cookie.Value)
+		if user != nil {
+			isLoggedIn = true
+		}
+	}
+	thread.IsLoggedIn = isLoggedIn
 	// Rendu du template thread.html
 	tmpl := template.Must(template.ParseFiles("internal/templates/thread.html"))
 	err = tmpl.Execute(w, thread)

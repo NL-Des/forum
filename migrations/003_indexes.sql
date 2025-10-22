@@ -11,7 +11,6 @@ CREATE INDEX idx_users_username ON users(username);
 CREATE INDEX idx_users_email ON users(email);
 
 -- Index sur les sujets
-CREATE INDEX idx_topics_category ON topics(category_id);
 CREATE INDEX idx_topics_user ON topics(user_id);
 
 -- Index sur les messages

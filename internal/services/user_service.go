@@ -21,6 +21,10 @@ func (s *userService) Register(username, email, password string) error {
 	if err == nil && existing != nil {
 		return errors.New("❌ email already registered")
 	}
+	existing2, err2 := s.repo.GetByUsername(username)
+	if err2 == nil && existing2 != nil {
+		return errors.New("❌ username already registered")
+	}
 
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {

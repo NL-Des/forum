@@ -32,15 +32,17 @@ func main() {
 	//   cheminement BdD → repositories → services → handlers
 	userRepository := repositories.NewUserRepository(db)
 	topicPostRepository := repositories.NewTopicPostRepository(db)
+	categoryRepository := repositories.NewCategoryRepository(db)
 	reactionRepository := repositories.NewReactionRepository(db)
 
 	userService := services.NewUserService(userRepository)
 	topicPostService := services.NewTopicPostService(topicPostRepository)
+	categoryService := services.NewCategoryService(categoryRepository)
 	reactionService := services.NewReactionService(reactionRepository)
 
 	//4- Récup des Routes HTTP:
 	//   handlers → front
-	router := handlers.Router(userService, topicPostService, reactionService)
+	router := handlers.Router(userService, topicPostService, categoryService, reactionService)
 
 	//5- Lancement serveur:
 	addr := os.Getenv("SERVER_PORT")
