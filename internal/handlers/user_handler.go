@@ -5,6 +5,7 @@ import (
 	"encoding/base64"
 	"encoding/hex"
 	"fmt"
+	"forum/internal/domain"
 	"net/http"
 	"time"
 )
@@ -54,10 +55,14 @@ func AuthenticateHandler(w http.ResponseWriter, r *http.Request) {
 	password := r.FormValue("password")
 	_, err := userService.Authenticate(email, password)
 	if err != nil {
-		// Réaffiche home.html avec message d'erreur
-		RenderTemplate(w, "home.html", map[string]string{
-			"❌ Error": err.Error(),
-		})
+		topics, _ := topicPostService.GetAllTopics()
+		data := Datas{
+			Error:      err.Error(),
+			Email:      email,
+			Topics:     topics,
+			IsLoggedIn: false,
+		}
+		RenderTemplate(w, "home.html", data)
 		return
 	}
 
@@ -99,10 +104,30 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 
 	err := userService.Register(username, email, password)
 	if err != nil {
-		// Réaffiche le formulaire avec une erreur
-		RenderTemplate(w, "register.html", map[string]string{
-			"❌ error": err.Error(),
-		})
+		if err.Error() == "❌ email already registered" {
+
+			registerUser := domain.User{
+				Error:    err.Error(),
+				Username: username,
+			}
+
+			RenderTemplate(w, "register.html", registerUser)
+
+		} else if err.Error() == "❌ username already registered" {
+			registerUser := domain.User{
+				Error: "❌ username already registered",
+				Email: email,
+			}
+
+			RenderTemplate(w, "register.html", registerUser)
+		} else {
+			registerUser := domain.User{
+				Error: "❌ error",
+			}
+
+			RenderTemplate(w, "register.html", registerUser)
+
+		}
 		return
 	}
 

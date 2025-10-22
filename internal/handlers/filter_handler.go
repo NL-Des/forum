@@ -7,11 +7,11 @@ import (
 	"net/http"
 )
 
-type Datas struct {
+/*type Datas struct {
 	Topics     []domain.Topic
 	Categories []domain.Category
 	IsLoggedIn bool
-}
+}*/
 
 func FilterTopicByUser(w http.ResponseWriter, r *http.Request) {
 
