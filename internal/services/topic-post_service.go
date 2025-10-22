@@ -57,3 +57,19 @@ func (s *topicPostService) FilterTopic(UserId int) ([]domain.Topic, error) {
 	}
 	return topics, nil
 }
+
+func (s *topicPostService) FilterByCategorie(CategorieName string) ([]domain.Topic, error) {
+	topics, err := s.repo.GetTopicsByCategories(CategorieName)
+	if err != nil {
+		return nil, err
+	}
+	return topics, nil
+}
+
+func (s *topicPostService) FilterByCategorieAndUserId(CategorieName string, UserId int) ([]domain.Topic, error) {
+	topics, err := s.repo.GetTopicsByCategoriesAndUserId(CategorieName, UserId)
+	if err != nil {
+		return nil, err
+	}
+	return topics, nil
+}

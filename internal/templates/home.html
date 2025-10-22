@@ -15,18 +15,21 @@
 			</div>
 			<div class="middle-buttons">
 			    <form action="/filter" method="POST">
+					{{if .IsLoggedIn}}
 			        <select name="filters" id="filters">
 			            <option value="">selection par filtre</option>
 			            <option value="messages">vos messages</option>
 			            <option value="likes">liste des 'likes'</option>
 			        </select>
-				
+					{{end}}
 			        <select name="categories" id="categories">
-			            <option value="">selection par catégorie</option>
-			            <option value="cat1">catégorie 1</option>
-			            <option value="cat2">catégorie 2</option>
-			            <option value="cat3">catégorie 3</option>
-			        </select>
+                          <option value="">Sélection par catégorie</option>
+                          {{range .Categories}}
+                            <!--<option value="{{.ID}}">{{.Name}}</option>-->
+							<option value="{{.Name}}">{{.Name}}
+                          {{end}}
+                    </select>
+
 				
 			        <button type="submit">Filtrer</button>
 			    </form>
