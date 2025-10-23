@@ -41,6 +41,20 @@ p {
   justify-content: center;
 }
 
+.btn {
+  display: inline-block;
+  padding: 4px 8px;
+  background-color: #eef0ee;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  border: none;
+}
+
+.btn:hover {
+  background-color: #c6c9c6;
+}
+
 /**********************************************************************/
 /*MARK: MESSAGE
 /**********************************************************************/
@@ -60,7 +74,7 @@ h3 {
   transition: transform 0.2s, box-shadow 0.2s;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 0px;
   flex-direction: column;
 }
 
@@ -77,6 +91,10 @@ h3 {
   gap: 10px;
 }
 
+
+.ld {
+    align-self: flex-end; /* force l'alignement à gauche */
+}
 /**********************************************************************/
 /*MARK: CATEGORIES DU MESSAGE
 /**********************************************************************/
