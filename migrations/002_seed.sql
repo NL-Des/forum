@@ -9,7 +9,7 @@ Simuler des contenus (topics, messages…)*/
 INSERT INTO categories (name) VALUES 
 	("ERROR"), 
 	("Correctifs"), 
-	("Sa marche, mais je ne sais pas pourquoi"), 
+	("Ça marche, mais je ne sais pas pourquoi"), 
 	("Comment j'ai corrigé ce bug ?");
 
 INSERT OR IGNORE INTO users (username, password, email) VALUES 
