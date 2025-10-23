@@ -104,7 +104,7 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 
 	err := userService.Register(username, email, password)
 	if err != nil {
-		if err.Error() == "❌ email already registered" {
+		if err.Error() == "❌ Email déjà enregistré" {
 
 			registerUser := domain.User{
 				Error:    err.Error(),
@@ -113,9 +113,9 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 
 			RenderTemplate(w, "register.html", registerUser)
 
-		} else if err.Error() == "❌ username already registered" {
+		} else if err.Error() == "❌ Nom d'utilisateur déjà utilisé" {
 			registerUser := domain.User{
-				Error: "❌ username already registered",
+				Error: "❌ Nom d'utilisateur déjà utilisé",
 				Email: email,
 			}
 

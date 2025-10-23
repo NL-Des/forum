@@ -2,15 +2,15 @@
 <html lang="fr">
 <head>
 	<meta charset="UTF-8">
-	<title>Registration</title>
+	<title>Inscription</title>
 	<link rel="stylesheet" href="assets/css/register.css">
 </head>
 <body>
 	<div id="home">
-		<a href="/"><span>←</span>Home</a>
+		<a href="/"><span>←</span>Page d'accueil</a>
 	</div>
 	<div class="register form">
-		<h1>create an account</h1>
+		<h1>Créer un compte</h1>
 		{{with .Error}}
 			<p style="color:red; font-weight:bold;">{{.}}</p>
         {{end}}
@@ -18,10 +18,10 @@
 			<!--{{with .Error}}
 			<p style="color:red; font-weight:bold;">{{.}}</p>
             {{end}}-->
-			<input type="text" name="username" placeholder="username" value="{{.Username}}" required>
+			<input type="text" name="username" placeholder="Nom d'Utilisateur" value="{{.Username}}" required>
             <input type="email" name="email" placeholder="Email" value="{{.Email}}" required>
-            <input type="password" name="password" placeholder="password" required>
-            <button type="submit">Register</button>
+            <input type="password" name="password" placeholder="Mot de Passe" required>
+            <button type="submit">S'inscrire</button>
 		</form>
 		<h2>Vous avez déjà un compte ? <a href="/">Connexion</a></h2>
 	</div>
