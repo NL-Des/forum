@@ -15,7 +15,7 @@
 				</a>
 			</div>
 			<div class="middle-buttons">
-				<form action="/filter" method="POST">
+			    <form action="/filter" method="POST">
 					{{if .IsLoggedIn}}
 						<select name="filters" id="filters">
 							<option value="">selection par filtre</option>
@@ -28,11 +28,13 @@
 						{{range .Categories}}
 							<!--<option value="{{.ID}}">{{.Name}}</option>-->
 							<option value="{{.Name}}">{{.Name}}
-						{{end}}
-					</select>
-					<button type="submit">Filtrer</button>
-					</form>
-				</div>
+                          {{end}}
+                    </select>
+
+				
+			        <button type="submit">Filtrer</button>
+			    </form>
+			</div>
 
 			<div class="right-buttons">
 				<div class="right-buttons">
