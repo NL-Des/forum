@@ -18,7 +18,8 @@ func ReactHandler(w http.ResponseWriter, r *http.Request) {
 	// Vérifie l’utilisateur à partir du token
 	user, err := userService.Home(cookie.Value)
 	if err != nil || user == nil {
-		http.Error(w, "❌ invalid session", http.StatusUnauthorized)
+		/* http.Error(w, "❌ invalid session", http.StatusUnauthorized) */
+		w.WriteHeader(http.StatusNoContent) // ERROR 204, it's for the servor, to advise it it's normal nothing come back.
 		return
 	}
 
