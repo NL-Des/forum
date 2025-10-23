@@ -12,7 +12,8 @@ func ReactHandler(w http.ResponseWriter, r *http.Request) {
 	/*userID := r.Context().Value("userID").(int64)*/
 	cookie, err := r.Cookie("session_token")
 	if err != nil {
-		http.Error(w, "❌ unauthenticated user", http.StatusUnauthorized)
+		/* http.Error(w, "❌ unauthenticated user", http.StatusUnauthorized) */
+		w.WriteHeader(http.StatusNoContent) 
 		return
 	}
 	// Vérifie l’utilisateur à partir du token
