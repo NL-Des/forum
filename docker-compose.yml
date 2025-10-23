@@ -24,10 +24,12 @@ services:
     restart: unless-stopped # Si l'image plante, elle redémarre automatiquement sauf arrêt manuel.
     init: true # Pas encore bien compris, mais semble gérer les signaux.
     volumes: 
-      - ../forum.db:/app/forum.db
+      - ./vault/forum.db:/app/forum.db
       # ./forum.db C'est la localisation de la BDD au niveau local
       # ---------- /app/forum.db C'est la localisation de la BDD dans le container
     ports:
       - 8086:8086 # le premier c'est le port du pec, le second c'est celui du container
     networks: 
       - web # Connection du container à un réseau Docker nommé web.
+    environment:
+      - FORUM_DB_PATH=/app/forum.db
