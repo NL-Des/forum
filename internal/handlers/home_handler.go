@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"forum/internal/domain"
 	"log"
 	"net/http"
@@ -46,16 +47,28 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "❌ error fetching categories", http.StatusInternalServerError)
 		return
 	}
-
-	cookie, err := r.Cookie("session_token")
+	cookieState, err := r.Cookie("state")
+	if err != nil {
+		fmt.Println(err)
+	}
 	var isLoggedIn bool
-
-	if err == nil {
+	cookie, err := r.Cookie("session_token")
+	if err != nil {
+		fmt.Println(err)
+	}
+	if err == nil && cookie != nil {
 		// Vérifie si le token correspond à un utilisateur connecté
 		user, _ := userService.Home(cookie.Value)
 		if user != nil {
 			isLoggedIn = true
 		}
+	} else if err != nil && cookieState != nil {
+		user, _ := userService.Home(cookieState.Value)
+		if user != nil {
+			isLoggedIn = true
+		}
+	} else {
+		isLoggedIn = false
 	}
 
 	datas := Datas{

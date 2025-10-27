@@ -21,7 +21,6 @@ func (s *authService) GitHub(username, email string) error {
 			fmt.Println("erreur login ")
 			return err
 		}
-		fmt.Println("ca fonctionne normakement ")
 		return nil
 	}
 	err := s.repo.RegisterAuth(username, email)
@@ -29,6 +28,13 @@ func (s *authService) GitHub(username, email string) error {
 		fmt.Println("erreur register")
 		return err
 	}
-	fmt.Println("ca fonctionne normalement ?")
+	return nil
+}
+
+func (s *authService) AuthToken(Token, username string) error {
+	err := s.repo.LoginAuthByUsername(Token, username)
+	if err != nil {
+		return err
+	}
 	return nil
 }

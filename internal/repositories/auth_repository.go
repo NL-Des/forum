@@ -71,3 +71,8 @@ func (r *authRepository) LoginAuth(username string) error {
 	}
 	return nil
 }
+
+func (r *authRepository) LoginAuthByUsername(Token, username string) error {
+	_, err := r.db.Exec("UPDATE users SET token = ? WHERE username = ? ;", Token, username)
+	return err
+}

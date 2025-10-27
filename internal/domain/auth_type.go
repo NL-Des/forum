@@ -10,8 +10,10 @@ type AuthRepository interface {
 	LoginAuth(username string) error
 	RegisterAuth(username, email string) error
 	UserExisting(username string) bool
+	LoginAuthByUsername(Token, username string) error
 }
 
 type AuthService interface {
 	GitHub(username, email string) error
+	AuthToken(Token, username string) error
 }

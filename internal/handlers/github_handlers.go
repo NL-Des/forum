@@ -96,7 +96,7 @@ func githubCallbackHandler(w http.ResponseWriter, r *http.Request) {
 	userInfo := getGitHubUserInfo(ghresp.AccessToken)
 
 	w.Header().Set("Content-type", "application/json")
-	http.Redirect(w, r, "/", 301)
+	//http.Redirect(w, r, "/", 301)
 
 	var user domain.GitHubUser
 	if err := json.Unmarshal(userInfo, &user); err != nil {
@@ -112,6 +112,18 @@ func githubCallbackHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err)
 		return
 	}
+
+	cookie, err := r.Cookie("state")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	err = authService.AuthToken(cookie.Value, user.Login)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	http.Redirect(w, r, "/", 301)
 }
 
 func getGitHubUserInfo(accessToken string) []byte {
