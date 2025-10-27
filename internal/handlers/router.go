@@ -5,8 +5,8 @@ import (
 	"net/http"
 )
 
-func Router(userService domain.UserService, topicPostService domain.TopicPostService, categoryService domain.CategoryService, reactionService domain.ReactionService, filterService domain.FilterService) http.Handler {
-	InitHandlers(userService, topicPostService, categoryService, reactionService, filterService)
+func Router(userService domain.UserService, topicPostService domain.TopicPostService, categoryService domain.CategoryService, reactionService domain.ReactionService, filterService domain.FilterService, authService domain.AuthService) http.Handler {
+	InitHandlers(userService, topicPostService, categoryService, reactionService, filterService, authService)
 
 	mux := http.NewServeMux()
 
@@ -22,6 +22,8 @@ func Router(userService domain.UserService, topicPostService domain.TopicPostSer
 	mux.HandleFunc("/react", ReactHandler)
 	mux.HandleFunc("/remove-reaction", RemoveReactionHandler)
 	mux.HandleFunc("/filter", FilterTopicByUser)
+	mux.HandleFunc("/api/login-gh/", githubLoginHandler)
+	mux.HandleFunc("/api/github/callback/", githubCallbackHandler)
 
 	fs := http.FileServer(http.Dir("internal/templates/assets"))
 	mux.Handle("/assets/", http.StripPrefix("/assets/", fs))

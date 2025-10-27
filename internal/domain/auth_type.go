@@ -1,0 +1,17 @@
+package domain
+
+type GitHubUser struct {
+	Login string `json:"login"`
+	ID    int    `json:"id"`
+	Email string `json:"email"`
+}
+
+type AuthRepository interface {
+	LoginAuth(username string) error
+	RegisterAuth(username, email string) error
+	UserExisting(username string) bool
+}
+
+type AuthService interface {
+	GitHub(username, email string) error
+}
